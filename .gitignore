@@ -4,8 +4,6 @@ __pycache__/
 *$py.class
 
 # Stack Overflow official source is larger than GitHub's normal file limit.
-data/raw_results_*.csv
-domain*/data.csv
 
 # C extensions
 *.so
