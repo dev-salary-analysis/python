@@ -101,3 +101,19 @@ python scripts/build_dataset.py --year 2025 \
 
 분석 재현성을 위해 이상치 경계와 목표 변수 중앙값은
 `data/preprocessing_metadata.json`에 저장됩니다.
+
+## 팀원 2: JVM 언어 End-to-End 분석
+
+Java, Kotlin, Scala 사용자의 EDA·통계·시각화를 한 번에
+다시 생성하려면 저장소 루트에서 실행합니다.
+
+```bash
+python domain2_jvm/analysis.py
+```
+
+실행 시 Pandas·Polars 로딩 비교, Seaborn 정적 차트, 상관계수와
+Java–Kotlin Welch t-test를 수행합니다.
+연봉, 경력, 상관관계, 조직 규모를 위 2개·아래 2개로 배치한
+`salary_chart.png` 하나로 통합합니다. ML Pipeline은 팀원 6이 담당합니다.
+2025 설문 데이터를 사용하는 것이
+이 프로젝트의 팀 결정입니다.
