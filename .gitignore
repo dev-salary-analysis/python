@@ -4,9 +4,6 @@ __pycache__/
 *$py.class
 
 # Stack Overflow official source is larger than GitHub's normal file limit.
-data/raw_results_*.csv
-domain*/data.csv
-domain5_platform/*.csv
 
 # C extensions
 *.so
@@ -221,6 +218,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-domain5_platform/*.csv
-domain5_platform/*.png
