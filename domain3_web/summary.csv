@@ -1,0 +1,4 @@
+language,count,mean_salary_usd,median_salary_usd,std_salary
+JavaScript,14606,88058.0,75410.0,67436.0
+TypeScript,10151,91521.0,79315.0,68420.0
+PHP,4010,71217.0,60155.0,58029.0
