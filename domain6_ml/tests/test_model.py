@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 
 from domain6_ml.model import (
+    HIGH_SALARY_QUANTILE,
     LANGUAGE_FEATURES,
     create_high_salary_targets,
     create_language_coefficient_output,
@@ -89,7 +90,8 @@ def test_target_creation_uses_train_threshold():
         "lang_r": [0, 1, 0, 1],
     })
     train_df, test_df = split_train_test_data(df, random_state=42, test_size=0.5)
-    threshold = train_df["ConvertedCompYearly"].quantile(0.75)
+    assert HIGH_SALARY_QUANTILE == 0.50
+    threshold = train_df["ConvertedCompYearly"].quantile(HIGH_SALARY_QUANTILE)
     y_train = create_high_salary_targets(train_df, threshold)
     y_test = create_high_salary_targets(test_df, threshold)
     assert len(y_train) == len(train_df)
@@ -104,7 +106,7 @@ def test_feature_columns_exclude_leakage_and_target_columns():
         "ConvertedCompYearly": [1000, 2000],
         "LogSalary": [6.9, 7.6],
         "LanguageHaveWorkedWith": ["Python", "Java"],
-        "HighSalaryTop25": [0, 1],
+        "HighSalary": [0, 1],
         "Country": ["US", "CA"],
         "YearsCodeProNumeric": [1, 2],
         "RemoteWork": ["Remote", "Hybrid"],

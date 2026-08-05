@@ -1,234 +1,234 @@
 feature,coefficient,abs_coefficient,direction
-cat__Country_Switzerland,4.081185068046132,4.081185068046132,positive
-cat__Country_United States of America,3.3070246204276583,3.3070246204276583,positive
-cat__Country_Israel,3.049707343693405,3.049707343693405,positive
-cat__Country_Argentina,-2.343933085827227,2.343933085827227,negative
-cat__DevType_Academic researcher,-2.122669269295665,2.122669269295665,negative
-"cat__Country_Iran, Islamic Republic of...",1.9964491112940264,1.9964491112940264,positive
-cat__Country_Ukraine,-1.9285020565942572,1.9285020565942572,negative
-cat__Country_Ireland,1.8761397268493163,1.8761397268493163,positive
-"cat__DevType_Senior executive (C-suite, VP, etc.)",1.839422922054646,1.839422922054646,positive
-cat__Country_Nomadic,1.804180087977759,1.804180087977759,positive
-cat__Country_Denmark,1.803934903446709,1.803934903446709,positive
-cat__Country_Singapore,1.718134106689556,1.718134106689556,positive
-cat__Country_Iceland,1.6293431465798358,1.6293431465798358,positive
-cat__DevType_Student,-1.5868725944734432,1.5868725944734432,negative
-cat__Employment_Student,-1.5867988408666551,1.5867988408666551,negative
-cat__Country_United Kingdom of Great Britain and Northern Ireland,1.5816113536009653,1.5816113536009653,positive
-cat__Employment_Retired,-1.5346914358978985,1.5346914358978985,negative
-cat__Country_Mauritania,1.5296652874912382,1.5296652874912382,positive
-cat__Country_Cyprus,1.4474593266101352,1.4474593266101352,positive
-cat__Country_Ethiopia,1.4170440828622586,1.4170440828622586,positive
-cat__DevType_System administrator,-1.4010951002667267,1.4010951002667267,negative
-cat__DevType_Engineering manager,1.387590994944097,1.387590994944097,positive
-cat__Country_Indonesia,-1.347911503348186,1.347911503348186,negative
-cat__Country_Australia,1.3370568268280443,1.3370568268280443,positive
-cat__Country_Colombia,-1.3271387713390428,1.3271387713390428,negative
-cat__Country_Hong Kong (S.A.R.),1.3085762738649758,1.3085762738649758,positive
-cat__Country_Canada,1.3033921018067285,1.3033921018067285,positive
-cat__Country_Slovakia,-1.3006070095569284,1.3006070095569284,negative
-cat__Country_Nigeria,-1.2982044601872182,1.2982044601872182,negative
-cat__Country_Malaysia,-1.293334576471859,1.293334576471859,negative
-cat__Country_United Arab Emirates,1.266579536769486,1.266579536769486,positive
-cat__DevType_Retired,-1.2607608192150372,1.2607608192150372,negative
-cat__Country_Latvia,-1.2474829827283294,1.2474829827283294,negative
-cat__Country_Russian Federation,-1.2458714908313397,1.2458714908313397,negative
-cat__Country_Chile,-1.2317530843408373,1.2317530843408373,negative
-cat__Country_Oman,1.2211587037988647,1.2211587037988647,positive
-cat__Country_Egypt,-1.1950980431011946,1.1950980431011946,negative
-cat__Country_India,-1.1845176431576645,1.1845176431576645,negative
-cat__DevType_Data or business analyst,-1.1436366981433257,1.1436366981433257,negative
-cat__Country_Belgium,1.067542654711045,1.067542654711045,positive
-"cat__Employment_Independent contractor, freelancer, or self-employed",0.9723399201804009,0.9723399201804009,positive
-cat__Country_Netherlands,0.9644625110038779,0.9644625110038779,positive
-cat__Country_Nepal,-0.9628788982948439,0.9628788982948439,negative
-cat__Country_Mexico,-0.9492378627291818,0.9492378627291818,negative
-"cat__Country_Venezuela, Bolivarian Republic of...",-0.9161599601874502,0.9161599601874502,negative
-"cat__OrgSize_Just me - I am a freelancer, sole proprietor, etc.",-0.9066558094125997,0.9066558094125997,negative
-cat__Country_Kazakhstan,-0.9011170278562438,0.9011170278562438,negative
-cat__DevType_Support engineer or analyst,-0.8942005150940275,0.8942005150940275,negative
-"cat__EdLevel_Associate degree (A.A., A.S., etc.)",-0.8573812866213315,0.8573812866213315,negative
-cat__Country_Pakistan,-0.8565344936501076,0.8565344936501076,negative
-cat__Country_Luxembourg,0.8361129074076432,0.8361129074076432,positive
-cat__Country_Kyrgyzstan,0.8302612445734111,0.8302612445734111,positive
-cat__RemoteWork_In-person,-0.8292999332710665,0.8292999332710665,negative
-cat__Country_Armenia,-0.8243061953047973,0.8243061953047973,negative
-cat__Country_Bosnia and Herzegovina,-0.819474100549583,0.819474100549583,negative
-cat__Country_South Korea,0.8127756229016387,0.8127756229016387,positive
-cat__Country_Italy,-0.8099168021720888,0.8099168021720888,negative
-cat__Country_Turkey,-0.7940848712603308,0.7940848712603308,negative
-cat__Country_Saudi Arabia,0.7874813312375302,0.7874813312375302,positive
-cat__Country_Jordan,-0.7865955908575998,0.7865955908575998,negative
-cat__Country_Dominican Republic,-0.782511126182252,0.782511126182252,negative
-cat__OrgSize_Less than 20 employees,-0.7709596132023715,0.7709596132023715,negative
-"cat__DevType_Architect, software or solutions",0.7565956839744794,0.7565956839744794,positive
-cat__Country_Philippines,-0.7536703166693179,0.7536703166693179,negative
-cat__Country_Norway,0.7399894196364925,0.7399894196364925,positive
-cat__Country_Peru,-0.7288364294263595,0.7288364294263595,negative
-cat__Country_Tunisia,-0.7221913348250688,0.7221913348250688,negative
-cat__Country_Estonia,0.7191504423865417,0.7191504423865417,positive
-cat__Country_Republic of Moldova,-0.6989327836176732,0.6989327836176732,negative
-cat__Country_Ghana,-0.6983571049830489,0.6983571049830489,negative
-cat__Country_Costa Rica,0.6925711061040102,0.6925711061040102,positive
-cat__DevType_Financial analyst or engineer,0.6828920730600276,0.6828920730600276,positive
-cat__DevType_AI/ML engineer,0.682865336299111,0.682865336299111,positive
-cat__Country_Montenegro,0.6681342252532332,0.6681342252532332,positive
-cat__Country_Guatemala,-0.6604765275616159,0.6604765275616159,negative
-cat__Country_Morocco,-0.657545712213964,0.657545712213964,negative
-cat__Country_Algeria,-0.6534949846606217,0.6534949846606217,negative
-cat__Country_Czech Republic,-0.6528958098860305,0.6528958098860305,negative
-cat__Country_Panama,0.6516366022671702,0.6516366022671702,positive
-lang__lang_php,-0.6442634481560036,0.6442634481560036,negative
-cat__Country_Bolivia,-0.6231951950573361,0.6231951950573361,negative
-cat__Country_Republic of North Macedonia,-0.6180189841814148,0.6180189841814148,negative
-cat__Country_Bangladesh,-0.6025364928095704,0.6025364928095704,negative
-cat__Country_Nicaragua,0.6022302793144483,0.6022302793144483,positive
-num__YearsCodeProNumeric,0.5951663692308419,0.5951663692308419,positive
-cat__EdLevel_Other (please specify):,-0.5939649053874444,0.5939649053874444,negative
-cat__DevType_Cloud infrastructure engineer,0.5726257694360146,0.5726257694360146,positive
-cat__DevType_Cybersecurity or InfoSec professional,0.565846584822235,0.565846584822235,positive
-lang__lang_scala,0.5636905051264818,0.5636905051264818,positive
-cat__Country_Brazil,-0.5534956492477191,0.5534956492477191,negative
-cat__Country_Georgia,-0.5519564017293578,0.5519564017293578,negative
-"cat__RemoteWork_Hybrid (some remote, leans heavy to in-person)",-0.5433864181403022,0.5433864181403022,negative
-lang__lang_go,0.539549263238861,0.539549263238861,positive
-cat__Country_Germany,0.5292619348828608,0.5292619348828608,positive
-cat__Country_Isle of Man,-0.528048216321944,0.528048216321944,negative
-cat__OrgSize_I don’t know,-0.517408140415443,0.517408140415443,negative
-cat__Country_Malta,-0.515705095229795,0.515705095229795,negative
-"cat__RemoteWork_Hybrid (some in-person, leans heavy to flexibility)",-0.49358504425674726,0.49358504425674726,negative
-"cat__OrgSize_10,000 or more employees",0.4933390405512039,0.4933390405512039,positive
-cat__Country_Afghanistan,-0.4886434104960003,0.4886434104960003,negative
-cat__Country_Moldova,-0.4745055921282881,0.4745055921282881,negative
-cat__Country_Madagascar,-0.4743131233294937,0.4743131233294937,negative
-cat__Country_Taiwan,-0.47194332714692777,0.47194332714692777,negative
-"cat__EdLevel_Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)",-0.4709815911598059,0.4709815911598059,negative
-cat__Country_Paraguay,0.46704927653437717,0.46704927653437717,positive
-"cat__DevType_Developer, QA or test",-0.4583765166319627,0.4583765166319627,negative
-cat__Country_Austria,0.4547951326857712,0.4547951326857712,positive
-"cat__EdLevel_Professional degree (JD, MD, Ph.D, Ed.D, etc.)",0.44124336708030587,0.44124336708030587,positive
-lang__lang_typescript,0.4362876126158498,0.4362876126158498,positive
-cat__Country_Greece,-0.43397728137928604,0.43397728137928604,negative
-cat__Country_Croatia,-0.4311199228921564,0.4311199228921564,negative
-cat__Country_Bulgaria,-0.42948703768780816,0.42948703768780816,negative
-cat__Country_Zimbabwe,-0.4171609546977925,0.4171609546977925,negative
-cat__Country_Cuba,0.4140734693497227,0.4140734693497227,positive
-"cat__DevType_Developer, desktop or enterprise applications",-0.41380662532660445,0.41380662532660445,negative
-cat__Country_Rwanda,-0.41318360792011183,0.41318360792011183,negative
-cat__OrgSize_20 to 99 employees,-0.4087305909525532,0.4087305909525532,negative
-"cat__DevType_Developer, back-end",0.40796794868233865,0.40796794868233865,positive
-cat__Country_Jamaica,0.3999190298813301,0.3999190298813301,positive
-cat__DevType_Applied scientist,0.3967503817884305,0.3967503817884305,positive
-cat__Country_Lebanon,0.393655031116891,0.393655031116891,positive
-cat__EdLevel_Primary/elementary school,-0.3844580995775835,0.3844580995775835,negative
-"cat__DevType_Developer, AI apps or physical AI",-0.3841824822247233,0.3841824822247233,negative
-cat__Country_Sweden,-0.37502774577515435,0.37502774577515435,negative
-cat__Country_Uruguay,-0.3747440077966621,0.3747440077966621,negative
-cat__Country_Mongolia,-0.37285073581599165,0.37285073581599165,negative
-cat__Country_Yemen,-0.3709356175149201,0.3709356175149201,negative
-cat__Employment_Not employed,-0.36163026988182567,0.36163026988182567,negative
-cat__Country_Uganda,-0.3501521372009873,0.3501521372009873,negative
-"cat__OrgSize_5,000 to 9,999 employees",0.34712450594465827,0.34712450594465827,positive
-cat__Country_South Africa,-0.3419481845911905,0.3419481845911905,negative
-cat__Country_United Republic of Tanzania,-0.3237200044882606,0.3237200044882606,negative
-lang__lang_csharp,-0.32328510214600864,0.32328510214600864,negative
-lang__lang_rust,0.32039570620751606,0.32039570620751606,positive
-cat__Employment_I prefer not to say,0.3099030756263292,0.3099030756263292,positive
-cat__Country_Lithuania,0.30879385686783545,0.30879385686783545,positive
-lang__lang_swift,0.30635157990067063,0.30635157990067063,positive
-cat__Country_Cameroon,-0.30615749879832677,0.30615749879832677,negative
-"cat__RemoteWork_Your choice (very flexible, you can come in when you want or just as needed)",-0.3023514869248971,0.3023514869248971,negative
-cat__DevType_Project manager,0.29399292982133896,0.29399292982133896,positive
-cat__Country_New Zealand,0.2881938552020421,0.2881938552020421,positive
-cat__DevType_Other (please specify):,-0.282886907671043,0.282886907671043,negative
-cat__Country_Zambia,-0.2820633593290096,0.2820633593290096,negative
-cat__Country_Kosovo,-0.281773777389959,0.281773777389959,negative
-cat__Country_Botswana,-0.2771902415729634,0.2771902415729634,negative
-cat__Employment_Employed,0.2766536396028514,0.2766536396028514,positive
-cat__Country_Sri Lanka,-0.27451212532907476,0.27451212532907476,negative
-cat__Country_Maldives,-0.2729496752274921,0.2729496752274921,negative
-"cat__DevType_Developer, mobile",0.27064270780402805,0.27064270780402805,positive
-cat__DevType_Product manager,0.26377587651692536,0.26377587651692536,positive
-cat__Country_Bhutan,-0.2546571335613713,0.2546571335613713,negative
-cat__Country_Mali,-0.2464670892428234,0.2464670892428234,negative
-cat__Country_Belarus,0.24620183554607156,0.24620183554607156,positive
-cat__RemoteWork_Remote,0.24439897135583177,0.24439897135583177,positive
-cat__Country_El Salvador,-0.24333190673581134,0.24333190673581134,negative
-cat__Country_Honduras,-0.2293477545590225,0.2293477545590225,negative
-cat__Country_Hungary,-0.22610730095017828,0.22610730095017828,negative
-cat__Country_Côte d'Ivoire,0.21855238749055267,0.21855238749055267,positive
-cat__Country_Azerbaijan,-0.21785056105543607,0.21785056105543607,negative
-lang__lang_r,-0.21169999403226356,0.21169999403226356,negative
-lang__lang_kotlin,0.20741504119557172,0.20741504119557172,positive
-cat__Country_Benin,-0.20598445005939864,0.20598445005939864,negative
-cat__EdLevel_Some college/university study without earning a degree,-0.19908423832452438,0.19908423832452438,negative
-"cat__DevType_Founder, technology or otherwise",0.1946468627152306,0.1946468627152306,positive
-lang__lang_python,0.1944181251544179,0.1944181251544179,positive
-"cat__DevType_UX, Research Ops or UI design professional",-0.18705154476121288,0.18705154476121288,negative
-cat__Country_Albania,0.1864853701218483,0.1864853701218483,positive
-cat__Country_Thailand,-0.18572656395620496,0.18572656395620496,negative
-cat__Country_Uzbekistan,-0.18130264248592304,0.18130264248592304,negative
-cat__Country_Slovenia,0.17840232015369875,0.17840232015369875,positive
-"cat__DevType_Developer, front-end",-0.17721103636439994,0.17721103636439994,negative
-"cat__DevType_Developer, game or graphics",-0.1766658522628836,0.1766658522628836,negative
-cat__Country_Trinidad and Tobago,-0.1711173692268129,0.1711173692268129,negative
-cat__Country_Guyana,-0.15646276102207363,0.15646276102207363,negative
-"cat__EdLevel_Master’s degree (M.A., M.S., M.Eng., MBA, etc.)",0.15329284543994565,0.15329284543994565,positive
-cat__Country_Syrian Arab Republic,-0.15269437136256367,0.15269437136256367,negative
-cat__Country_China,0.14900564280547082,0.14900564280547082,positive
-cat__Country_Mauritius,-0.14206856664059622,0.14206856664059622,negative
-cat__Country_Iraq,-0.13602842723769681,0.13602842723769681,negative
-cat__DevType_Database administrator or engineer,0.13556334927235916,0.13556334927235916,positive
-cat__OrgSize_500 to 999 employees,-0.12784828965212927,0.12784828965212927,negative
-cat__Country_Romania,-0.12168783365496516,0.12168783365496516,negative
-num__LanguageCount,-0.11295184645200965,0.11295184645200965,negative
-cat__Country_Poland,-0.11159839671355838,0.11159839671355838,negative
-cat__Country_Ecuador,-0.10872760302093701,0.10872760302093701,negative
-cat__Country_Kuwait,-0.10654957231876032,0.10654957231876032,negative
-cat__Country_Namibia,-0.10585322250228073,0.10585322250228073,negative
-lang__lang_c,-0.10313424994564804,0.10313424994564804,negative
-cat__DevType_Data scientist,0.10228321646104366,0.10228321646104366,positive
-cat__Country_Portugal,-0.0999561033517136,0.0999561033517136,negative
-cat__Country_Guinea,-0.09992865185420138,0.09992865185420138,negative
-cat__Country_Myanmar,-0.09450309374046822,0.09450309374046822,negative
-cat__Country_Cambodia,-0.09231920118434872,0.09231920118434872,negative
-cat__Country_Barbados,-0.09181207348979366,0.09181207348979366,negative
-cat__Country_Suriname,-0.0861813664385839,0.0861813664385839,negative
-cat__Country_Angola,-0.08186599276233301,0.08186599276233301,negative
-cat__OrgSize_100 to 499 employees,-0.07578713399322802,0.07578713399322802,negative
-cat__Country_Democratic Republic of the Congo,-0.07484498548107202,0.07484498548107202,negative
-cat__Country_Kenya,0.061268258669322194,0.061268258669322194,positive
-"cat__DevType_Developer, embedded applications or devices",0.05611476383615478,0.05611476383615478,positive
-cat__Country_Togo,-0.052210079811359986,0.052210079811359986,negative
-cat__Country_Swaziland,-0.05141970946245363,0.05141970946245363,negative
-cat__Country_Somalia,-0.04600860150450848,0.04600860150450848,negative
-cat__Country_Lesotho,-0.04511954539510052,0.04511954539510052,negative
-"cat__Country_Congo, Republic of the...",-0.04449474649797257,0.04449474649797257,negative
-lang__lang_java,-0.04412983626230843,0.04412983626230843,negative
-"cat__OrgSize_1,000 to 4,999 employees",0.04270211989417458,0.04270211989417458,positive
-lang__lang_cpp,0.04163152877303362,0.04163152877303362,positive
-cat__Country_Malawi,-0.03781699537884969,0.03781699537884969,negative
-lang__lang_javascript,-0.036130756369846743,0.036130756369846743,negative
-cat__Country_Haiti,-0.03534901179138348,0.03534901179138348,negative
-cat__Country_Republic of Korea,0.03395874652724995,0.03395874652724995,positive
-"cat__DevType_Developer, full-stack",-0.026615726621217906,0.026615726621217906,negative
-cat__DevType_Data engineer,-0.02635122972411388,0.02635122972411388,negative
-cat__Country_Senegal,-0.024129703623364755,0.024129703623364755,negative
-cat__Country_Spain,-0.02373014970398452,0.02373014970398452,negative
-cat__Country_Libyan Arab Jamahiriya,-0.022939764140889513,0.022939764140889513,negative
-cat__Country_Mozambique,-0.018100377273018272,0.018100377273018272,negative
-cat__Country_Finland,-0.01732564202791275,0.01732564202791275,negative
-cat__Country_Djibouti,-0.0171664399361692,0.0171664399361692,negative
-cat__Country_Saint Lucia,-0.01642418342534747,0.01642418342534747,negative
-"cat__EdLevel_Bachelor’s degree (B.A., B.S., B.Eng., etc.)",-0.012890002687207613,0.012890002687207613,negative
-cat__Country_Papua New Guinea,-0.01154803036393987,0.01154803036393987,negative
-cat__DevType_DevOps engineer or professional,0.008581605350905006,0.008581605350905006,positive
-cat__Country_Belize,-0.007606894678081781,0.007606894678081781,negative
-cat__Country_Japan,0.007256463884641219,0.007256463884641219,positive
-cat__Country_Burundi,-0.005471023298268169,0.005471023298268169,negative
-cat__Country_North Korea,-0.004905524920897996,0.004905524920897996,negative
-cat__Country_Qatar,-0.004707307763319486,0.004707307763319486,negative
-cat__Country_Viet Nam,0.004154889167680342,0.004154889167680342,positive
-cat__Country_Serbia,7.304834838835138e-05,7.304834838835138e-05,positive
-cat__Country_France,2.2353155081287785e-05,2.2353155081287785e-05,positive
+cat__Country_Switzerland,4.151548249680932,4.151548249680932,positive
+cat__Country_United States of America,3.414712493400952,3.414712493400952,positive
+cat__Country_Denmark,2.96716787323523,2.96716787323523,positive
+cat__Country_Israel,2.4352708374442162,2.4352708374442162,positive
+cat__Country_Norway,2.336781641636336,2.336781641636336,positive
+cat__Country_Australia,2.156230739738801,2.156230739738801,positive
+cat__Country_Ireland,2.153949560355463,2.153949560355463,positive
+cat__Employment_Retired,-2.0413819281521843,2.0413819281521843,negative
+cat__DevType_Academic researcher,-1.947093461803691,1.947093461803691,negative
+cat__Country_Hong Kong (S.A.R.),1.8573691839906528,1.8573691839906528,positive
+cat__DevType_Student,-1.8321661833723635,1.8321661833723635,negative
+cat__Country_Singapore,1.8145106239748285,1.8145106239748285,positive
+cat__Country_Luxembourg,1.7988167798826358,1.7988167798826358,positive
+cat__Country_Nigeria,-1.7559587862787653,1.7559587862787653,negative
+cat__Country_United Kingdom of Great Britain and Northern Ireland,1.69195173750281,1.69195173750281,positive
+cat__Country_Cyprus,1.6608959372877292,1.6608959372877292,positive
+cat__Country_Germany,1.6352783937574995,1.6352783937574995,positive
+cat__Country_Canada,1.6254007708532558,1.6254007708532558,positive
+cat__DevType_Engineering manager,1.5738088151206209,1.5738088151206209,positive
+cat__Country_Iceland,1.5638172054001407,1.5638172054001407,positive
+cat__Country_Ukraine,-1.5561311206335182,1.5561311206335182,negative
+cat__Country_Indonesia,-1.5502854621006688,1.5502854621006688,negative
+cat__Country_India,-1.5440864774364709,1.5440864774364709,negative
+cat__Country_Egypt,-1.4456996952672656,1.4456996952672656,negative
+cat__Country_Nomadic,1.4443355215249878,1.4443355215249878,positive
+"cat__OrgSize_Just me - I am a freelancer, sole proprietor, etc.",-1.4167336459627171,1.4167336459627171,negative
+"cat__Country_Venezuela, Bolivarian Republic of...",-1.411541900818072,1.411541900818072,negative
+cat__Country_Netherlands,1.4017801175769125,1.4017801175769125,positive
+cat__Employment_Student,-1.3811628482058487,1.3811628482058487,negative
+cat__Country_Nepal,-1.3775750639275022,1.3775750639275022,negative
+cat__Country_Chile,-1.3747099902473747,1.3747099902473747,negative
+"cat__DevType_Senior executive (C-suite, VP, etc.)",1.3739639728123603,1.3739639728123603,positive
+cat__Country_Austria,1.3707934687331975,1.3707934687331975,positive
+cat__Country_Kazakhstan,-1.3449490881076873,1.3449490881076873,negative
+cat__Country_Bangladesh,-1.3059933232223808,1.3059933232223808,negative
+cat__Country_Colombia,-1.2333822092919309,1.2333822092919309,negative
+cat__Country_Guatemala,-1.2292073074136953,1.2292073074136953,negative
+cat__Country_Malaysia,-1.1981416399755767,1.1981416399755767,negative
+cat__Country_Pakistan,-1.1895500081868904,1.1895500081868904,negative
+cat__Country_New Zealand,1.1774726290682218,1.1774726290682218,positive
+cat__Country_Philippines,-1.1371650032352187,1.1371650032352187,negative
+cat__Country_Russian Federation,-1.0917015645755603,1.0917015645755603,negative
+cat__Country_Tunisia,-1.083113161192097,1.083113161192097,negative
+cat__Country_Saudi Arabia,1.054794276514757,1.054794276514757,positive
+cat__Country_Morocco,-1.0450869788533543,1.0450869788533543,negative
+cat__DevType_Retired,-1.028872542191862,1.028872542191862,negative
+cat__Country_Bolivia,-1.0218492120512352,1.0218492120512352,negative
+cat__Country_Ghana,-0.9817928443098197,0.9817928443098197,negative
+cat__Country_Brazil,-0.9666684452255424,0.9666684452255424,negative
+cat__Country_Belize,0.9499853161882554,0.9499853161882554,positive
+cat__Country_Finland,0.9497986509615516,0.9497986509615516,positive
+cat__Country_Belgium,0.9357350739735004,0.9357350739735004,positive
+"cat__Employment_Independent contractor, freelancer, or self-employed",0.9303336926155816,0.9303336926155816,positive
+cat__Country_Peru,-0.9269894385186865,0.9269894385186865,negative
+cat__RemoteWork_In-person,-0.8845778739277516,0.8845778739277516,negative
+cat__DevType_System administrator,-0.88401301404159,0.88401301404159,negative
+cat__Country_Isle of Man,0.8585505260781744,0.8585505260781744,positive
+cat__Country_Estonia,0.8436875642820701,0.8436875642820701,positive
+cat__Country_Afghanistan,-0.8314610675567512,0.8314610675567512,negative
+"cat__DevType_Architect, software or solutions",0.8235433370543008,0.8235433370543008,positive
+cat__Country_Georgia,-0.8000285216146005,0.8000285216146005,negative
+cat__Country_Viet Nam,-0.7743348593068198,0.7743348593068198,negative
+cat__Country_Mauritania,0.7632799550015174,0.7632799550015174,positive
+cat__Country_Mexico,-0.7511132227676705,0.7511132227676705,negative
+"cat__Country_Iran, Islamic Republic of...",0.747763697632089,0.747763697632089,positive
+cat__OrgSize_Less than 20 employees,-0.7414741835735268,0.7414741835735268,negative
+cat__DevType_AI/ML engineer,0.7341662992235786,0.7341662992235786,positive
+cat__DevType_Support engineer or analyst,-0.7305654115294775,0.7305654115294775,negative
+cat__Employment_Employed,0.7295518208436527,0.7295518208436527,positive
+cat__Country_Rwanda,-0.7203927304210013,0.7203927304210013,negative
+cat__Country_Armenia,-0.7077921761056511,0.7077921761056511,negative
+cat__Country_Madagascar,-0.6989087437279073,0.6989087437279073,negative
+cat__Country_Lithuania,0.6977474744491499,0.6977474744491499,positive
+num__YearsCodeProNumeric,0.6971922527882484,0.6971922527882484,positive
+cat__DevType_Data or business analyst,-0.6953603114170687,0.6953603114170687,negative
+"cat__EdLevel_Professional degree (JD, MD, Ph.D, Ed.D, etc.)",0.6921172720595515,0.6921172720595515,positive
+cat__Country_Turkey,-0.6902445526210139,0.6902445526210139,negative
+cat__Country_Taiwan,-0.6742240492743794,0.6742240492743794,negative
+cat__Country_Oman,0.6649423322680796,0.6649423322680796,positive
+cat__Country_United Arab Emirates,0.6621381301762251,0.6621381301762251,positive
+cat__Country_Zimbabwe,-0.6587877688147771,0.6587877688147771,negative
+"cat__EdLevel_Associate degree (A.A., A.S., etc.)",-0.6469747883729089,0.6469747883729089,negative
+cat__Country_Sri Lanka,-0.6196494594719426,0.6196494594719426,negative
+cat__Country_Italy,-0.618680184699918,0.618680184699918,negative
+cat__DevType_Cybersecurity or InfoSec professional,0.6169087845653543,0.6169087845653543,positive
+cat__Country_Mongolia,-0.6129933332817612,0.6129933332817612,negative
+cat__DevType_Other (please specify):,-0.6105166696731,0.6105166696731,negative
+cat__EdLevel_Other (please specify):,-0.5928095605051722,0.5928095605051722,negative
+cat__Country_Republic of Moldova,-0.5835786335461056,0.5835786335461056,negative
+cat__Country_Sweden,0.581146088979105,0.581146088979105,positive
+"cat__EdLevel_Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)",-0.5718934036635428,0.5718934036635428,negative
+cat__Country_Maldives,-0.5692922604552911,0.5692922604552911,negative
+lang__lang_scala,0.5556115041464533,0.5556115041464533,positive
+cat__DevType_Cloud infrastructure engineer,0.5516501396132695,0.5516501396132695,positive
+lang__lang_php,-0.5432540394028917,0.5432540394028917,negative
+cat__Country_Uganda,-0.5325317907827418,0.5325317907827418,negative
+cat__Country_Algeria,-0.5255626509777138,0.5255626509777138,negative
+cat__DevType_Product manager,0.5161631845983199,0.5161631845983199,positive
+cat__Country_Azerbaijan,-0.5150123090338441,0.5150123090338441,negative
+cat__Country_Ethiopia,0.5119773279738825,0.5119773279738825,positive
+cat__Country_United Republic of Tanzania,-0.5011887815256666,0.5011887815256666,negative
+cat__Country_Republic of North Macedonia,-0.5005123761539578,0.5005123761539578,negative
+cat__Country_Hungary,-0.4909327953736176,0.4909327953736176,negative
+cat__Country_Argentina,-0.48879559458565475,0.48879559458565475,negative
+cat__Country_Kosovo,-0.48556838660907725,0.48556838660907725,negative
+cat__Country_Honduras,-0.4758447003311488,0.4758447003311488,negative
+"cat__RemoteWork_Hybrid (some remote, leans heavy to in-person)",-0.4721647419311752,0.4721647419311752,negative
+cat__Country_Cameroon,-0.45963959615157085,0.45963959615157085,negative
+cat__Country_Thailand,-0.45835554109632753,0.45835554109632753,negative
+cat__Country_Panama,0.45467087247153104,0.45467087247153104,positive
+cat__EdLevel_Primary/elementary school,-0.45376186805564417,0.45376186805564417,negative
+cat__Country_Paraguay,-0.45125026729875495,0.45125026729875495,negative
+cat__Country_South Africa,-0.4353463212175409,0.4353463212175409,negative
+"cat__DevType_UX, Research Ops or UI design professional",-0.4290841173902466,0.4290841173902466,negative
+cat__Country_Poland,0.41895478218135873,0.41895478218135873,positive
+cat__Country_Trinidad and Tobago,-0.41654383685431956,0.41654383685431956,negative
+cat__Country_Belarus,-0.41424267136197346,0.41424267136197346,negative
+lang__lang_typescript,0.39947020824859564,0.39947020824859564,positive
+"cat__OrgSize_10,000 or more employees",0.3964219252298045,0.3964219252298045,positive
+"cat__DevType_Developer, back-end",0.39119554950069857,0.39119554950069857,positive
+cat__Country_Syrian Arab Republic,-0.38420273635193186,0.38420273635193186,negative
+"cat__DevType_Developer, QA or test",-0.3803616902505879,0.3803616902505879,negative
+cat__Country_Bhutan,-0.37798188884301553,0.37798188884301553,negative
+cat__Country_China,0.37749988125500755,0.37749988125500755,positive
+lang__lang_go,0.3734325595908027,0.3734325595908027,positive
+cat__Country_Mali,-0.3561830962329058,0.3561830962329058,negative
+cat__Country_Greece,-0.35081036721884257,0.35081036721884257,negative
+cat__Country_Botswana,-0.34010437961886264,0.34010437961886264,negative
+cat__Country_Zambia,-0.3349926766211148,0.3349926766211148,negative
+cat__Country_Dominican Republic,-0.33249112559404287,0.33249112559404287,negative
+cat__Country_Serbia,-0.3299619699924283,0.3299619699924283,negative
+cat__Country_Guyana,-0.32712698574532595,0.32712698574532595,negative
+"cat__RemoteWork_Hybrid (some in-person, leans heavy to flexibility)",-0.3145518696702128,0.3145518696702128,negative
+cat__Country_Uzbekistan,-0.3130867786683831,0.3130867786683831,negative
+cat__Country_Costa Rica,0.30760533370839943,0.30760533370839943,positive
+cat__EdLevel_Some college/university study without earning a degree,-0.29653836798121175,0.29653836798121175,negative
+lang__lang_swift,0.2913533103271687,0.2913533103271687,positive
+lang__lang_csharp,-0.27583526795353763,0.27583526795353763,negative
+cat__DevType_DevOps engineer or professional,0.27232452997214346,0.27232452997214346,positive
+lang__lang_rust,0.2686966144206825,0.2686966144206825,positive
+cat__Country_Mauritius,-0.2673106554431597,0.2673106554431597,negative
+cat__Country_Bosnia and Herzegovina,0.2643067477584512,0.2643067477584512,positive
+cat__Country_Kuwait,-0.2586583457528912,0.2586583457528912,negative
+cat__Country_Japan,-0.25660483096953923,0.25660483096953923,negative
+cat__Country_Iraq,-0.25383232949097345,0.25383232949097345,negative
+cat__Country_Croatia,-0.25127821016885343,0.25127821016885343,negative
+cat__Country_Cambodia,-0.2495923743605269,0.2495923743605269,negative
+"cat__RemoteWork_Your choice (very flexible, you can come in when you want or just as needed)",-0.24634714164010488,0.24634714164010488,negative
+cat__Country_France,0.23920226579621157,0.23920226579621157,positive
+cat__OrgSize_20 to 99 employees,-0.23548298314166904,0.23548298314166904,negative
+cat__Country_Malta,0.23117172714930645,0.23117172714930645,positive
+cat__DevType_Database administrator or engineer,-0.229274740761922,0.229274740761922,negative
+cat__Country_Benin,-0.22554122746628505,0.22554122746628505,negative
+cat__RemoteWork_Remote,0.22256541893799114,0.22256541893799114,positive
+"cat__EdLevel_Master’s degree (M.A., M.S., M.Eng., MBA, etc.)",0.22182828338170424,0.22182828338170424,positive
+cat__DevType_Project manager,-0.2191257295647379,0.2191257295647379,negative
+cat__Country_Moldova,-0.21196058885177765,0.21196058885177765,negative
+"cat__OrgSize_5,000 to 9,999 employees",0.20460931046252484,0.20460931046252484,positive
+cat__DevType_Financial analyst or engineer,0.20309050429092057,0.20309050429092057,positive
+cat__Country_Côte d'Ivoire,-0.19931237398770527,0.19931237398770527,negative
+"cat__DevType_Developer, mobile",0.1940419594034183,0.1940419594034183,positive
+cat__Country_Barbados,-0.19318910230969122,0.19318910230969122,negative
+cat__Country_Myanmar,-0.1922756046671264,0.1922756046671264,negative
+lang__lang_kotlin,0.18640951225297686,0.18640951225297686,positive
+cat__DevType_Applied scientist,-0.18617202516859158,0.18617202516859158,negative
+"cat__DevType_Developer, desktop or enterprise applications",-0.18528474219621918,0.18528474219621918,negative
+cat__DevType_Data engineer,0.17967896703195235,0.17967896703195235,positive
+cat__Country_Montenegro,-0.17801880232494283,0.17801880232494283,negative
+cat__Country_El Salvador,0.1766464857011526,0.1766464857011526,positive
+cat__Country_Romania,0.17652675129257553,0.17652675129257553,positive
+cat__Country_Albania,0.17430359011887714,0.17430359011887714,positive
+cat__Country_Namibia,-0.17348360098514476,0.17348360098514476,negative
+lang__lang_r,-0.17289867218031393,0.17289867218031393,negative
+cat__Country_Suriname,-0.16976247843144202,0.16976247843144202,negative
+"cat__OrgSize_1,000 to 4,999 employees",0.1605809586408195,0.1605809586408195,positive
+cat__Country_Bulgaria,-0.1604224713558827,0.1604224713558827,negative
+cat__Country_Yemen,0.14623237849922158,0.14623237849922158,positive
+"cat__DevType_Developer, game or graphics",0.14347860939331383,0.14347860939331383,positive
+cat__Country_Latvia,-0.1428952614435903,0.1428952614435903,negative
+"cat__DevType_Developer, embedded applications or devices",0.13996070824561394,0.13996070824561394,positive
+cat__Country_Guinea,-0.1395652617627011,0.1395652617627011,negative
+cat__Employment_I prefer not to say,0.1319200870572845,0.1319200870572845,positive
+cat__Country_Swaziland,-0.13015535220096808,0.13015535220096808,negative
+cat__Country_Angola,-0.1263983335685394,0.1263983335685394,negative
+cat__Country_Democratic Republic of the Congo,-0.12232381161499212,0.12232381161499212,negative
+cat__Country_Togo,-0.11993783340106362,0.11993783340106362,negative
+cat__Country_Malawi,-0.11019900269232312,0.11019900269232312,negative
+cat__OrgSize_I don’t know,-0.10796289279136252,0.10796289279136252,negative
+cat__Country_Kenya,0.10707065898854175,0.10707065898854175,positive
+cat__Country_Ecuador,0.10384263546131398,0.10384263546131398,positive
+cat__Country_Slovakia,-0.10179987182137298,0.10179987182137298,negative
+cat__Country_Nicaragua,-0.1011532682338125,0.1011532682338125,negative
+cat__Country_Lebanon,0.09788328933435234,0.09788328933435234,positive
+cat__Country_Jordan,-0.0906314009555966,0.0906314009555966,negative
+lang__lang_javascript,-0.08498663420693056,0.08498663420693056,negative
+"cat__DevType_Developer, front-end",-0.08256598030875732,0.08256598030875732,negative
+lang__lang_java,-0.0816960475493484,0.0816960475493484,negative
+cat__Country_Haiti,-0.08132027065629632,0.08132027065629632,negative
+num__LanguageCount,-0.07310622284322729,0.07310622284322729,negative
+cat__DevType_Data scientist,-0.06699122476941942,0.06699122476941942,negative
+cat__Country_Czech Republic,-0.0661962327932422,0.0661962327932422,negative
+"cat__Country_Congo, Republic of the...",-0.0645942846595349,0.0645942846595349,negative
+cat__Employment_Not employed,-0.06433703238951502,0.06433703238951502,negative
+cat__Country_Kyrgyzstan,-0.06410076967664924,0.06410076967664924,negative
+cat__Country_Saint Lucia,-0.06047947582522274,0.06047947582522274,negative
+cat__Country_Libyan Arab Jamahiriya,-0.059828310202909706,0.059828310202909706,negative
+cat__Country_Mozambique,-0.05976422638690956,0.05976422638690956,negative
+"cat__DevType_Founder, technology or otherwise",0.058367186206701116,0.058367186206701116,positive
+cat__Country_Lesotho,-0.056960725090661406,0.056960725090661406,negative
+cat__Country_Somalia,-0.05411356653348617,0.05411356653348617,negative
+cat__Country_Slovenia,-0.051597305220343434,0.051597305220343434,negative
+"cat__EdLevel_Bachelor’s degree (B.A., B.S., B.Eng., etc.)",-0.04704377509507185,0.04704377509507185,negative
+cat__Country_Cuba,-0.045889643121288994,0.045889643121288994,negative
+cat__Country_Senegal,-0.04528452702621157,0.04528452702621157,negative
+cat__Country_Portugal,0.03920407342377347,0.03920407342377347,positive
+lang__lang_c,-0.037479282165295634,0.037479282165295634,negative
+cat__Country_South Korea,0.03434298613832047,0.03434298613832047,positive
+cat__Country_Papua New Guinea,-0.032897971545155606,0.032897971545155606,negative
+cat__OrgSize_100 to 499 employees,0.029555443205786142,0.029555443205786142,positive
+"cat__DevType_Developer, AI apps or physical AI",0.029540971468968797,0.029540971468968797,positive
+cat__Country_Djibouti,-0.028341708210609586,0.028341708210609586,negative
+cat__Country_Burundi,-0.025344516354302786,0.025344516354302786,negative
+cat__Country_Spain,0.023018376593261534,0.023018376593261534,positive
+cat__Country_Qatar,-0.015966615103429792,0.015966615103429792,negative
+cat__OrgSize_500 to 999 employees,0.015409859700049008,0.015409859700049008,positive
+cat__Country_North Korea,-0.010943398287929356,0.010943398287929356,negative
+"cat__DevType_Developer, full-stack",0.010488117708501615,0.010488117708501615,positive
+cat__Country_Jamaica,-0.006745780639683358,0.006745780639683358,negative
+cat__Country_Republic of Korea,-0.006352818616663696,0.006352818616663696,negative
+lang__lang_python,-0.005327668572986869,0.005327668572986869,negative
+lang__lang_cpp,0.004257406850803854,0.004257406850803854,positive
+cat__Country_Uruguay,-0.0028347746383613334,0.0028347746383613334,negative
 lang__lang_julia,0.0,0.0,neutral

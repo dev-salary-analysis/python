@@ -35,6 +35,23 @@ class DatasetBuilderTest(unittest.TestCase):
         self.assertTrue(javascript_only["lang_Java"].eq(0).all())
         self.assertTrue(javascript_only["lang_JavaScript"].eq(1).all())
 
+    def test_duplicate_response_ids_are_removed_and_recorded(self) -> None:
+        raw = pd.DataFrame(
+            {
+                "ResponseId": [1, 1, 2, 3],
+                "Country": ["South Korea"] * 4,
+                "ConvertedCompYearly": [50_000, 50_000, 80_000, 120_000],
+                "LanguageHaveWorkedWith": ["Python"] * 4,
+                "YearsCodePro": ["3", "3", "5", "10"],
+            }
+        )
+
+        cleaned, metadata = clean_data(raw, 2024, None)
+
+        self.assertEqual(metadata["duplicate_rows_removed"], 1)
+        self.assertEqual(metadata["rows_after_duplicate_filter"], 3)
+        self.assertFalse(cleaned["ResponseId"].duplicated().any())
+
     def test_domain_loader_reads_the_single_shared_csv(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

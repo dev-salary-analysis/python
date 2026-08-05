@@ -1,0 +1,19 @@
+﻿language,experience_group,count,median_salary_usd
+JavaScript,0–2년,1174,21383.0
+JavaScript,3–5년,2236,42373.0
+JavaScript,6–10년,3434,71798.5
+JavaScript,11–15년,2621,91022.0
+JavaScript,16–20년,1887,98612.0
+JavaScript,21년 이상,2996,109438.0
+TypeScript,0–2년,782,23874.5
+TypeScript,3–5년,1697,46406.0
+TypeScript,6–10년,2617,75410.0
+TypeScript,11–15년,1943,93602.0
+TypeScript,16–20년,1266,104413.0
+TypeScript,21년 이상,1689,116015.0
+PHP,0–2년,292,15082.0
+PHP,3–5년,572,32484.0
+PHP,6–10년,883,54457.0
+PHP,11–15년,739,74249.0
+PHP,16–20년,562,79354.0
+PHP,21년 이상,907,88243.0

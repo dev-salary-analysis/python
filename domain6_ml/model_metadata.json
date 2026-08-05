@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-05T01:00:09.496937+00:00",
+  "generated_at": "2026-08-05T04:00:11.128050+00:00",
   "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
-  "pandas_version": "3.0.5",
+  "pandas_version": "2.3.3",
   "numpy_version": "2.5.1",
   "scikit_learn_version": "1.9.0",
   "joblib_version": "1.5.3",
-  "input_data_path": "/Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml/domain6_ml/results.csv",
+  "input_data_path": "/Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv",
   "input_file_size": 5749764,
   "total_loaded_rows": 21678,
   "valid_model_rows": 21678,
@@ -17,10 +17,10 @@
   "test_rows": 4336,
   "random_state": 42,
   "test_size": 0.2,
-  "high_salary_quantile": 0.75,
-  "high_salary_threshold": 120646.75,
-  "target_name": "HighSalaryTop25",
-  "target_definition": "학습 데이터의 ConvertedCompYearly 75% 분위수 이상",
+  "high_salary_quantile": 0.5,
+  "high_salary_threshold": 76340.5,
+  "target_name": "HighSalary",
+  "target_definition": "학습 데이터의 ConvertedCompYearly 중앙값 이상",
   "numeric_features": [
     "YearsCodeProNumeric",
     "LanguageCount"
@@ -56,7 +56,7 @@
     "ConvertedCompYearly",
     "LogSalary",
     "LanguageHaveWorkedWith",
-    "HighSalaryTop25"
+    "HighSalary"
   ],
   "model_comparison": [
     "dummy",
@@ -72,6 +72,6 @@
     "random_state": 42
   },
   "save_model": true,
-  "model_path": "/Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml/domain6_ml/model.joblib",
+  "model_path": "/Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain6_ml/high_salary_model.joblib",
   "model_reload_verified": true
 }

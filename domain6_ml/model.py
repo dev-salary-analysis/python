@@ -36,7 +36,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 RANDOM_STATE = 42
 TEST_SIZE = 0.2
-HIGH_SALARY_QUANTILE = 0.75
+HIGH_SALARY_QUANTILE = 0.50
 MIN_MODEL_ROWS = 100
 SAVE_MODEL = True
 REPORT_SAMPLE_MIN = 30
@@ -99,7 +99,7 @@ LEAKAGE_COLUMNS = [
     "ConvertedCompYearly",
     "LogSalary",
     "LanguageHaveWorkedWith",
-    "HighSalaryTop25",
+    "HighSalary",
 ]
 
 NUMERIC_FEATURES = ["YearsCodeProNumeric", "LanguageCount"]
@@ -149,19 +149,9 @@ def resolve_input_path(input_path: Path | None = None) -> Path:
             return candidate
         raise AnalysisError(f"지정된 입력 파일이 존재하지 않습니다: {candidate}")
 
-    local_candidate = DOMAIN_ROOT / "results.csv"
-    if local_candidate.exists() and local_candidate.is_file():
-        return local_candidate
-
     if DEFAULT_INPUT_PATH.exists() and DEFAULT_INPUT_PATH.is_file():
         return DEFAULT_INPUT_PATH
-
-    matches = sorted([p for p in PROJECT_ROOT.rglob("results.csv") if p.is_file()])
-    if len(matches) == 1:
-        return matches[0]
-    if len(matches) > 1:
-        raise AnalysisError("results.csv 파일이 여러 개 발견되어 실행을 중단합니다.")
-    raise AnalysisError("results.csv 파일을 찾을 수 없습니다.")
+    raise AnalysisError(f"공통 정제 데이터를 찾을 수 없습니다: {DEFAULT_INPUT_PATH}")
 
 
 def read_csv_header(input_path: Path) -> pd.DataFrame:
@@ -263,10 +253,7 @@ def validate_source_data(df: pd.DataFrame) -> None:
         raise AnalysisError("ResponseId 컬럼이 필요합니다.")
     if df["ResponseId"].isna().any():
         raise AnalysisError("ResponseId에 결측값이 있습니다.")
-    if df["ResponseId"].duplicated().any():
-        dupes = df[df["ResponseId"].duplicated(keep=False)].copy()
-        if len(dupes) > len(dupes["ResponseId"].unique()):
-            raise AnalysisError("ResponseId 중복이 존재합니다. 동일한 ResponseId가 여러 행에 있으면 분석을 중단합니다.")
+    # 중복은 clean_model_rows()에서 제거하고 제외 건수를 기록한다.
 
     if "ConvertedCompYearly" not in df.columns:
         raise AnalysisError("ConvertedCompYearly 컬럼이 필요합니다.")
@@ -582,7 +569,7 @@ def create_high_salary_targets(df: pd.DataFrame, threshold: float) -> pd.Series:
         threshold: 학습 데이터 기준 고연봉 임계값.
 
     반환:
-        HighSalaryTop25 이진 타깃 시리즈.
+        HighSalary 이진 타깃 시리즈.
 
     발생 가능한 예외:
         None.
@@ -605,8 +592,8 @@ def create_model_inputs(model_df: pd.DataFrame, categorical_features: list[str] 
     """
     leakage_excluded = [col for col in LEAKAGE_COLUMNS if col in model_df.columns]
     input_df = model_df.drop(columns=leakage_excluded, errors="ignore")
-    if "HighSalaryTop25" in input_df.columns:
-        input_df = input_df.drop(columns=["HighSalaryTop25"], errors="ignore")
+    if "HighSalary" in input_df.columns:
+        input_df = input_df.drop(columns=["HighSalary"], errors="ignore")
     return input_df.copy()
 
 
@@ -637,7 +624,7 @@ def identify_feature_columns(df: pd.DataFrame) -> list[str]:
     features = [
         col
         for col in df.columns
-        if col not in leakage_excluded and col != "HighSalaryTop25" and col != "Country"
+        if col not in leakage_excluded and col != "HighSalary" and col != "Country"
     ]
     return features
 
@@ -931,14 +918,14 @@ def create_confusion_matrix_outputs(full_model_predictions: np.ndarray, y_test: 
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Actual")
     ax.set_xticks([0, 1])
-    ax.set_xticklabels(["BelowTop25Threshold", "HighSalaryTop25"])
+    ax.set_xticklabels(["BelowMedianSalary", "HighSalary"])
     ax.set_yticks([0, 1])
-    ax.set_yticklabels(["BelowTop25Threshold", "HighSalaryTop25"])
+    ax.set_yticklabels(["BelowMedianSalary", "HighSalary"])
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
             ax.text(j, i, cm[i, j], ha="center", va="center", color="black")
     fig.tight_layout()
-    fig.savefig(png_path, dpi=150)
+    fig.savefig(png_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     return cm_df, png_path
 
@@ -956,7 +943,7 @@ def create_classification_report(y_test: pd.Series, y_pred: np.ndarray) -> pd.Da
     발생 가능한 예외:
         AnalysisError: 생성 실패 시.
     """
-    report = classification_report(y_test, y_pred, target_names=["BelowTop25Threshold", "HighSalaryTop25"], output_dict=True, zero_division=0)
+    report = classification_report(y_test, y_pred, target_names=["BelowMedianSalary", "HighSalary"], output_dict=True, zero_division=0)
     report_df = pd.DataFrame(report).T
     report_df.to_csv(DOMAIN_ROOT / "classification_report.csv")
     return report_df
@@ -1583,7 +1570,7 @@ def create_language_salary_html_report(
         <div class="card"><div class="controls"><label class="control">검색<input id="table-search" placeholder="언어 검색"></label><label class="control">최소 사용자 수<input id="min-users" type="number" min="0" value="0"></label><label class="control">최소 평균 연봉<input id="min-average" type="number" min="0" value="0"></label><label class="control">최소 중앙 연봉<input id="min-median" type="number" min="0" value="0"></label><label class="control"><span>표본 부족 숨기기</span><input id="hide-small" type="checkbox"></label><button id="download-csv" class="button">CSV 다운로드</button><button onclick="window.print()" class="button">인쇄 / PDF</button></div><div class="table-wrap"><table id="salary-table"><thead><tr><th>언어</th><th>사용자 수</th><th>평균 연봉</th><th>중앙 연봉</th><th>평균-중앙값 차이</th><th>차이 비율</th><th>Q1</th><th>Q3</th><th>IQR</th><th>실제 고연봉자 수</th><th>실제 고연봉 비율</th><th>표본 상태</th></tr></thead><tbody>{''.join(table_rows)}</tbody></table></div></div>
       </section>
       <section id="detail" class="section"><h2>언어 상세 선택</h2><p class="section-intro">선택한 언어의 규모·중심 연봉·분포·표본 상태를 확인합니다.</p><div class="card"><label class="control">언어<select id="detail-language">{language_options}</select></label><div class="detail-grid" style="margin-top:16px"><div class="detail-item"><div class="label">사용자 수</div><div id="detail-users" class="value">—</div></div><div class="detail-item"><div class="label">평균 연봉</div><div id="detail-average" class="value">—</div></div><div class="detail-item"><div class="label">중앙 연봉</div><div id="detail-median" class="value">—</div></div><div class="detail-item"><div class="label">표본 상태</div><div id="detail-warning" class="value">—</div></div><div class="detail-item"><div class="label">평균-중앙값 차이</div><div id="detail-gap" class="value">—</div></div><div class="detail-item"><div class="label">Q1–Q3</div><div id="detail-iqr" class="value">—</div></div><div class="detail-item"><div class="label">실제 고연봉자 수</div><div id="detail-high-count" class="value">—</div></div><div class="detail-item"><div class="label">실제 고연봉 비율</div><div id="detail-high-rate" class="value">—</div></div></div><p id="detail-interpretation" class="note" style="margin-top:16px"></p></div></section>
-      <section id="method" class="section"><h2>Methodology</h2><div class="card"><ol><li>Stack Overflow 설문에서 <code>{escape(str(salary_column))}</code>을 숫자로 정리하고 결측·0 이하 연봉과 언어 결측·중복 응답을 기존 정제 기준으로 제외했습니다.</li><li><code>LanguageHaveWorkedWith</code>와 15개 언어 플래그를 사용해 언어별 0/1 특성을 만들었습니다.</li><li>언어별 사용자 집단마다 평균, 중앙값, P10, Q1, Q3, P90, IQR, 표준편차, 최솟값·최댓값을 계산했습니다.</li><li>고연봉 비율은 학습 데이터의 75% 분위수 이상 여부를 사용한 보조 지표입니다. 분류 모델은 이 보고서의 부록에서만 다룹니다.</li><li>한 사람이 여러 언어의 통계에 포함될 수 있으므로 언어별 집단은 독립표본이 아닙니다.</li></ol><p><b>연봉 단위:</b> {escape(str(currency_label))}</p></div></section>
+      <section id="method" class="section"><h2>Methodology</h2><div class="card"><ol><li>Stack Overflow 설문에서 <code>{escape(str(salary_column))}</code>을 숫자로 정리하고 결측·0 이하 연봉과 언어 결측·중복 응답을 기존 정제 기준으로 제외했습니다.</li><li><code>LanguageHaveWorkedWith</code>와 15개 언어 플래그를 사용해 언어별 0/1 특성을 만들었습니다.</li><li>언어별 사용자 집단마다 평균, 중앙값, P10, Q1, Q3, P90, IQR, 표준편차, 최솟값·최댓값을 계산했습니다.</li><li>고연봉 비율은 학습 데이터의 중앙값 이상 여부를 사용한 보조 지표입니다. 분류 모델은 이 보고서의 부록에서만 다룹니다.</li><li>한 사람이 여러 언어의 통계에 포함될 수 있으므로 언어별 집단은 독립표본이 아닙니다.</li></ol><p><b>연봉 단위:</b> {escape(str(currency_label))}</p></div></section>
       <section id="limits" class="section"><h2>Limitations</h2><div class="warning-box"><ul><li>설문 응답자가 전체 개발자 모집단을 대표하지 않을 수 있습니다.</li><li>연봉과 사용 언어는 자기보고 데이터입니다.</li><li>국가별 임금·환율·생활비 차이가 언어별 결과에 함께 반영될 수 있습니다.</li><li>언어 사용자 집단별 경력과 직무 구성이 다를 수 있습니다.</li><li>평균은 일부 극단적인 고연봉 응답의 영향을 받을 수 있습니다.</li><li>관찰된 연봉 차이는 인과관계를 의미하지 않습니다.</li><li>채용, 연봉 책정, 개인 평가에 직접 사용해서는 안 됩니다.</li></ul></div></section>
       <section class="section"><details><summary>부록: 언어 사용자 그룹별 분류 모델 진단</summary><p>아래 결과는 언어별 독립 모델이 아닙니다. 전체 Full 모델의 테스트 결과를 각 언어 사용자 하위집단으로 나눈 보조 진단이며, 실제 연봉 금액을 직접 예측한 결과가 아닙니다.</p><div class="table-wrap"><table><thead><tr><th>언어</th><th>테스트 수</th><th>실제 고연봉자 수</th><th>예측 고연봉자 수</th><th>실제 비율</th><th>예측 비율</th><th>F1</th><th>ROC-AUC</th></tr></thead><tbody>{''.join(model_appendix_rows) if model_appendix_rows else '<tr><td colspan="8">분류 보조 결과가 없습니다.</td></tr>'}</tbody></table></div><div class="grid"><div class="card chart-card"><div id="chart-model-count" class="chart"></div></div><div class="card chart-card"><div id="chart-model-rate" class="chart"></div></div><div class="card chart-card"><div id="chart-model-f1" class="chart"></div></div><div class="card chart-card"><div id="chart-model-roc" class="chart"></div></div></div></details></section>
       <footer class="footer">핵심 분석 주제: 프로그래밍 언어 사용자 집단별 연봉 수준 및 분포 비교 · 메인 차트 {main_chart_count}개 · 부록 차트 {appendix_chart_count}개 · 보고서 크기는 생성 후 출력됩니다.</footer>
@@ -1731,7 +1718,7 @@ def save_model(full_pipeline: Pipeline) -> Path:
     발생 가능한 예외:
         AnalysisError: 저장 실패 시.
     """
-    model_path = DOMAIN_ROOT / "model.joblib"
+    model_path = DOMAIN_ROOT / "high_salary_model.joblib"
     try:
         joblib.dump(full_pipeline, model_path)
     except Exception as exc:  # pragma: no cover - defensive path
@@ -1789,8 +1776,8 @@ def create_model_metrics(result_payload: dict[str, Any], stats: dict[str, int], 
         None.
     """
     return {
-        "target_name": "HighSalaryTop25",
-        "target_definition": "학습 데이터의 연봉 75% 분위수 이상 여부",
+        "target_name": "HighSalary",
+        "target_definition": "학습 데이터의 연봉 중앙값 이상 여부",
         "high_salary_quantile": HIGH_SALARY_QUANTILE,
         "salary_threshold": high_salary_threshold,
         "total_loaded_rows": stats["total_loaded_rows"],
@@ -1850,8 +1837,8 @@ def create_model_metadata(input_path: Path, file_size: int, stats: dict[str, int
         "test_size": TEST_SIZE,
         "high_salary_quantile": HIGH_SALARY_QUANTILE,
         "high_salary_threshold": high_salary_threshold,
-        "target_name": "HighSalaryTop25",
-        "target_definition": "학습 데이터의 ConvertedCompYearly 75% 분위수 이상",
+        "target_name": "HighSalary",
+        "target_definition": "학습 데이터의 ConvertedCompYearly 중앙값 이상",
         "numeric_features": NUMERIC_FEATURES,
         "categorical_features": categorical_features,
         "language_features": LANGUAGE_FEATURES,
@@ -1886,16 +1873,16 @@ def create_result_json(result_payload: dict[str, Any], output_files: list[str]) 
     """
     return {
         "domain_id": 6,
-        "domain_name": "integrated_top25_salary_prediction",
-        "analysis_question": "언어 사용 여부와 개발자 특성으로 연봉 상위 25% 여부를 예측할 수 있는가?",
+        "domain_name": "integrated_high_salary_prediction",
+        "analysis_question": "언어 사용 여부와 개발자 특성으로 연봉 중앙값 이상 여부를 예측할 수 있는가?",
         "input_data": {
             "path": str(result_payload["input_path"]),
             "loaded_rows": result_payload["stats"]["total_loaded_rows"],
             "valid_rows": result_payload["stats"]["valid_model_rows"],
         },
         "target": {
-            "name": "HighSalaryTop25",
-            "definition": "학습 데이터의 ConvertedCompYearly 75% 분위수 이상",
+            "name": "HighSalary",
+            "definition": "학습 데이터의 ConvertedCompYearly 중앙값 이상",
             "quantile": HIGH_SALARY_QUANTILE,
             "salary_threshold": result_payload["high_salary_threshold"],
         },
@@ -1927,7 +1914,7 @@ def create_result_json(result_payload: dict[str, Any], output_files: list[str]) 
             "prediction_summary": result_payload["language_prediction_summary"],
         },
         "model_saved": SAVE_MODEL,
-        "model_path": str(DOMAIN_ROOT / "model.joblib"),
+        "model_path": str(DOMAIN_ROOT / "high_salary_model.joblib"),
         "model_reload_verified": result_payload["model_reload_verified"],
         "output_files": output_files,
         "key_findings": result_payload["key_findings"],
@@ -1941,14 +1928,15 @@ def create_readme_content(result_payload: dict[str, Any]) -> str:
     return f"""# Domain 6 — 전체 언어 및 개발자 특성 기반 고연봉 예측
 
 ## 분석 목표
-- 여러 프로그래밍 언어 사용 여부와 개발자 특성으로 연봉 상위 25%를 예측하는 모델을 구현했습니다.
+- 여러 프로그래밍 언어 사용 여부와 개발자 특성으로 연봉 중앙값 이상 여부를 예측하는 모델을 구현했습니다.
 - 실제 입력 데이터로 학습하고, 모델 성능과 산출물을 저장했습니다.
 
 ## 데이터와 타깃
-- 입력 파일: {result_payload['input_path']}
+- 입력 파일: `data/results.csv`
+- Domain 1~5 산출물은 입력으로 사용하지 않음
 - 최종 유효 표본 수: {result_payload['stats']['valid_model_rows']}
 - 학습/테스트 표본 수: {result_payload['train_rows']}/{result_payload['test_rows']}
-- 고연봉 기준: 학습 데이터의 ConvertedCompYearly 75% 분위수 이상
+- 고연봉 기준: 학습 데이터의 ConvertedCompYearly 중앙값 이상
 - 고연봉 임계값: {result_payload['high_salary_threshold']:.2f}
 
 ## 모델 성능 요약
@@ -1962,8 +1950,7 @@ def create_readme_content(result_payload: dict[str, Any]) -> str:
 
 ## 실행 방법
 ```bash
-cd /Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml
-./domain6_ml/.venv/bin/python -m domain6_ml.model
+python -m domain6_ml.model
 ```
 
 ## 산출물
@@ -1978,7 +1965,7 @@ cd /Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml
 - 언어별 예측 상세: [language_predictions.csv](language_predictions.csv)
 - 언어별 예측 요약: [language_prediction_summary.csv](language_prediction_summary.csv)
 - 예측 샘플: [prediction_samples.csv](prediction_samples.csv)
-- 모델 파일: [model.joblib](model.joblib)
+- 모델 파일: [high_salary_model.joblib](high_salary_model.joblib)
 - 메타데이터: [model_metrics.json](model_metrics.json) / [model_metadata.json](model_metadata.json)
 
 ## 참고
@@ -2034,7 +2021,7 @@ def create_result_html(
         "language_predictions.csv",
         "language_prediction_summary.csv",
         "prediction_samples.csv",
-        "model.joblib",
+        "high_salary_model.joblib",
         "model_metrics.json",
         "model_metadata.json",
         "result.md",
@@ -2146,7 +2133,7 @@ def create_result_html(
   <header class="cover">
     <div class="eyebrow">Domain 6 · Machine Learning Report</div>
     <h1>프로그래밍 언어 및 개발자 특성 기반<br>고연봉 예측 분석 보고서</h1>
-    <p class="subtitle">Stack Overflow 개발자 설문 데이터를 이용해 연봉 상위 25% 여부를 분류하고, 사용언어별 연봉 통계·테스트 성능·예측 결과를 함께 분석한 상세 보고서입니다.</p>
+    <p class="subtitle">Stack Overflow 개발자 설문 데이터를 이용해 연봉 중앙값 이상 여부를 분류하고, 사용언어별 연봉 통계·테스트 성능·예측 결과를 함께 분석한 상세 보고서입니다.</p>
     <p class="meta">생성 시각: {escape(str(result_payload.get('generated_at', '학습 실행 결과')))} · 입력 행 수: {result_payload['stats']['total_loaded_rows']:,} · 분석 유효 행 수: {result_payload['stats']['valid_model_rows']:,}</p>
   </header>
 
@@ -2161,13 +2148,13 @@ def create_result_html(
   <ul>
     <li>입력 파일: <code>{escape(str(result_payload['input_path']))}</code></li>
     <li>학습/테스트 표본: {result_payload['train_rows']:,} / {result_payload['test_rows']:,}</li>
-    <li>고연봉 정의: <strong>ConvertedCompYearly가 학습 데이터 75% 분위수 이상</strong></li>
+    <li>고연봉 정의: <strong>ConvertedCompYearly가 학습 데이터 중앙값 이상</strong></li>
     <li>분석 기준 임계값: <strong>{money(result_payload['high_salary_threshold'])}</strong></li>
     <li>분석 대상 언어: {len(LANGUAGE_FEATURES)}개 · 테스트 데이터에서 실제 사용자가 존재하는 언어: {int((language_eval_df['test_user_count'] > 0).sum())}개</li>
   </ul>
 
   <h2>2. 분석 목적과 해석 범위</h2>
-  <p>본 프로젝트의 예측 타깃은 실제 연봉 금액 자체가 아니라, 응답자의 연봉이 분석 표본 내 상위 25%에 속하는지 여부입니다. 따라서 결과의 “예측 확률”은 특정 언어를 사용하면 연봉이 얼마가 된다는 의미가 아니라, 해당 응답자가 고연봉 그룹에 속할 확률을 뜻합니다.</p>
+  <p>본 프로젝트의 예측 타깃은 실제 연봉 금액 자체가 아니라, 응답자의 연봉이 학습 데이터 중앙값 이상인지 여부입니다. 따라서 결과의 “예측 확률”은 특정 언어를 사용하면 연봉이 얼마가 된다는 의미가 아니라, 해당 응답자가 고연봉 그룹에 속할 확률을 뜻합니다.</p>
   <p>언어별 통계는 관측된 연봉 분포를 보여주며, 언어별 평가는 최종 full_model을 각 언어 사용자의 테스트 하위집합에 적용한 결과입니다. 언어별 결과에는 국가·경력·직무·학력 차이가 섞여 있으므로 인과관계나 언어 자체의 순수한 효과로 해석해서는 안 됩니다.</p>
 
   <h2>3. 데이터와 타깃 정의</h2>
@@ -2185,7 +2172,7 @@ def create_result_html(
     </tbody>
   </table>
   </div>
-  <div class="callout warning"><strong>주의.</strong> 상위 25% 임계값은 현재 데이터의 상대적 기준입니다. 국가별 물가·환율·직무 구성·설문 응답 편향이 포함되어 있으므로 다른 국가나 다른 연도에 그대로 일반화할 수 없습니다.</div>
+  <div class="callout warning"><strong>주의.</strong> 중앙값 임계값은 현재 데이터의 상대적 기준입니다. 국가별 물가·환율·직무 구성·설문 응답 편향이 포함되어 있으므로 다른 국가나 다른 연도에 그대로 일반화할 수 없습니다.</div>
 
   <h2>4. 특성 설계와 전처리</h2>
   <div class="two-col">
@@ -2208,7 +2195,7 @@ def create_result_html(
   <h2>6. 혼동행렬과 예측 오류</h2>
   <div class="two-col">
     <div class="figure"><img src="confusion_matrix.png" alt="최종 모델 혼동행렬"><p class="meta">실제/예측 고연봉 여부 혼동행렬</p></div>
-    <div><table><thead><tr><th>실제/예측</th><th>Below Top25</th><th>High Salary Top25</th></tr></thead><tbody>{confusion_rows}</tbody></table><ul><li>실제 고연봉을 고연봉으로 맞힌 수: {tp:,}건</li><li>실제 고연봉을 놓친 수: {fn:,}건</li><li>고연봉으로 예측했으나 실제로는 아닌 수: {fp:,}건</li><li>실제 저연봉을 저연봉으로 맞힌 수: {tn:,}건</li><li>고연봉 Recall이 높지만, Precision은 약 {fmt(full_metrics['precision'])}이므로 예측 고연봉 판정의 약 {fmt(1 - full_metrics['precision'])}는 오탐입니다.</li></ul></div>
+    <div><table><thead><tr><th>실제/예측</th><th>Below Median</th><th>High Salary</th></tr></thead><tbody>{confusion_rows}</tbody></table><ul><li>실제 고연봉을 고연봉으로 맞힌 수: {tp:,}건</li><li>실제 고연봉을 놓친 수: {fn:,}건</li><li>고연봉으로 예측했으나 실제로는 아닌 수: {fp:,}건</li><li>실제 저연봉을 저연봉으로 맞힌 수: {tn:,}건</li><li>고연봉 Recall이 높지만, Precision은 약 {fmt(full_metrics['precision'])}이므로 예측 고연봉 판정의 약 {fmt(1 - full_metrics['precision'])}는 오탐입니다.</li></ul></div>
   </div>
 
   <h2>7. 주요 예측 특성</h2>
@@ -2243,13 +2230,13 @@ def create_result_html(
 
   <h2>13. 결론과 한계</h2>
   <ol>
-    <li>현재 모델은 전체 개발자의 연봉 상위 25% 여부를 분류하는 데 의미 있는 성능을 보였습니다.</li>
+    <li>현재 모델은 전체 개발자의 연봉 중앙값 이상 여부를 분류하는 성능을 평가했습니다.</li>
     <li>언어별 통계를 통해 Go, Swift, Scala 등에서 상대적으로 높은 고연봉 비율이 관측되었지만, 이는 국가·직무·경력과 결합된 결과입니다.</li>
     <li>언어만 사용한 모델보다 프로필-only 모델이 훨씬 강하므로, 사용언어 단독으로 고연봉을 설명하기는 어렵습니다.</li>
     <li>평가는 단일 랜덤 분할 기준이므로 교차검증·연도별 검증·외부 데이터 검증이 추가로 필요합니다.</li>
     <li>Stack Overflow 설문은 무작위 모집단 조사가 아니며, 본 결과를 채용·연봉 책정·인사 의사결정에 사용해서는 안 됩니다.</li>
   </ol>
-  <div class="footer">Domain 6 분석 보고서 · 교육·연구용 결과 · 타깃은 실제 연봉 금액이 아닌 상위 25% 분류</div>
+  <div class="footer">Domain 6 분석 보고서 · 교육·연구용 결과 · 타깃은 실제 연봉 금액이 아닌 중앙값 기준 분류</div>
 </main>
 </body>
 </html>
@@ -2263,136 +2250,99 @@ def create_result_markdown(
     language_stats_df: pd.DataFrame,
     language_eval_df: pd.DataFrame,
 ) -> str:
-    """결과 요약 Markdown 문서를 생성한다.
-
-    입력:
-        result_payload: 실행 결과 딕셔너리.
-        coeff_df: 전체 계수 DataFrame.
-        lang_coeff_df: 언어 계수 DataFrame.
-
-    반환:
-        Markdown 문자열.
-
-    발생 가능한 예외:
-        None.
-    """
+    """Create the standard eight-section report for the independent ML domain."""
     metrics = result_payload["model_results"]
-    positive_features = coeff_df[coeff_df["direction"] == "positive"].head(15)
-    negative_features = coeff_df[coeff_df["direction"] == "negative"].head(15)
-    lines = []
-    lines.append("# Domain 6 — 전체 언어 및 개발자 특성 기반 고연봉 예측")
-    lines.append("")
-    lines.append("## 1. 분석 목적")
-    lines.append("다양한 프로그래밍 언어 사용 여부와 개발자 특성으로 연봉 상위 25% 여부를 예측하는 모델을 구현했다.")
-    lines.append("")
-    lines.append("## 2. 분석 질문")
-    lines.append("언어 사용 여부와 개발자 특성으로 연봉 상위 25% 여부를 예측할 수 있는가?")
-    lines.append("")
-    lines.append("## 3. 입력 데이터")
-    lines.append(f"- 실제 입력 파일 경로: {result_payload['input_path']}")
-    lines.append(f"- 전체 로딩 행 수: {result_payload['stats']['total_loaded_rows']}")
-    lines.append(f"- 제외 행 수: {result_payload['stats']['salary_missing_excluded'] + result_payload['stats']['salary_nonpositive_excluded'] + result_payload['stats']['language_missing_excluded'] + result_payload['stats']['duplicate_excluded']}")
-    lines.append(f"- 최종 유효 표본 수: {result_payload['stats']['valid_model_rows']}")
-    lines.append(f"- 학습 표본 수: {result_payload['train_rows']}")
-    lines.append(f"- 테스트 표본 수: {result_payload['test_rows']}")
-    lines.append("")
-    lines.append("## 4. ML 특성 생성")
-    lines.append("- YearsCodeProNumeric은 YearsCodePro 문자열을 숫자로 변환해 생성했다.")
-    lines.append("- LanguageCount는 선택된 언어 개수를 계산해 생성했다.")
-    lines.append("- 언어별 0·1 특성은 LanguageHaveWorkedWith를 세미콜론 기준으로 정확히 분리해 생성했다.")
-    lines.append("- Java와 JavaScript, C와 C++, C#는 문자열 분리 기준으로 정확히 구분했다.")
-    lines.append("- 파생 특성은 data 폴더에 저장하지 않고 메모리상에서만 사용했다.")
-    lines.append("")
-    lines.append("## 5. 고연봉 기준")
-    lines.append(f"- 75% 분위수: {HIGH_SALARY_QUANTILE}")
-    lines.append(f"- 실제 임계 연봉: {result_payload['high_salary_threshold']:.2f}")
-    lines.append("- 클래스 0은 임계값 미만, 클래스 1은 임계값 이상이다.")
-    lines.append("- 학습 데이터에서만 임계값을 계산해 누수를 방지했다.")
-    lines.append("")
-    lines.append("## 6. 사용 특성")
-    lines.append(f"- 수치형: {', '.join(NUMERIC_FEATURES)}")
-    lines.append(f"- 범주형: {', '.join(result_payload['categorical_features'])}")
-    lines.append(f"- 언어 사용 여부: {', '.join(LANGUAGE_FEATURES)}")
-    lines.append(f"- Country 처리: {'포함' if result_payload['country_included'] else '제외'}")
-    lines.append("- 누수 방지를 위해 ResponseId, ConvertedCompYearly, LogSalary, LanguageHaveWorkedWith, HighSalaryTop25를 제외했다.")
-    lines.append("")
-    lines.append("## 7. 모델 구조")
-    lines.append("- DummyClassifier: 가장 흔한 클래스를 예측하는 기준 모델")
-    lines.append("- language_only LogisticRegression: 언어 사용 여부와 LanguageCount만 사용")
-    lines.append("- profile_only LogisticRegression: 경력·직무·학력·근무형태·고용형태·조직 규모 등 일반 특성 사용")
-    lines.append("- full_model LogisticRegression: 언어와 일반 특성을 함께 사용")
-    lines.append("- ColumnTransformer 기반 전처리")
-    lines.append("- class_weight=balanced")
-    lines.append("")
-    lines.append("## 8. 클래스 분포")
-    lines.append(f"- 학습 데이터: {result_payload['train_target_distribution']}")
-    lines.append(f"- 테스트 데이터: {result_payload['test_target_distribution']}")
-    lines.append("- 클래스 불균형이 있으므로 Accuracy만으로 성능을 판단하지 않았다.")
-    lines.append("")
-    lines.append("## 9. 모델 비교")
-    for mode in ["dummy", "language_only", "profile_only", "full_model"]:
-        mode_metrics = result_payload["model_results"][mode]
-        lines.append(f"- {mode}: Accuracy={mode_metrics['accuracy']:.3f}, Balanced Accuracy={mode_metrics['balanced_accuracy']:.3f}, F1={mode_metrics['f1']:.3f}, ROC-AUC={mode_metrics['roc_auc']:.3f}, Average Precision={mode_metrics['average_precision']:.3f}")
-    lines.append("")
-    lines.append("## 10. 최종 모델 평가")
-    full_metrics = result_payload["model_results"]["full_model"]
-    lines.append(f"- Accuracy: {full_metrics['accuracy']:.3f}")
-    lines.append(f"- Balanced Accuracy: {full_metrics['balanced_accuracy']:.3f}")
-    lines.append(f"- Precision: {full_metrics['precision']:.3f}")
-    lines.append(f"- Recall: {full_metrics['recall']:.3f}")
-    lines.append(f"- F1: {full_metrics['f1']:.3f}")
-    lines.append(f"- ROC-AUC: {full_metrics['roc_auc']:.3f}")
-    lines.append(f"- Average Precision: {full_metrics['average_precision']:.3f}")
-    lines.append("")
-    lines.append("## 11. 혼동행렬 해석")
-    lines.append("- 혼동행렬은 confusion_matrix.csv와 confusion_matrix.png로 저장했다.")
-    lines.append("- 실제 결과는 해당 파일을 참고한다.")
-    lines.append("")
-    lines.append("## 12. 주요 예측 특성")
+    full_metrics = metrics["full_model"]
+    positive_features = coeff_df[coeff_df["direction"] == "positive"].head(5)
+    positive_languages = lang_coeff_df[lang_coeff_df["direction"] == "positive"].head(3)
+    valid_language_stats = language_stats_df[language_stats_df["user_count"].ge(REPORT_SAMPLE_MIN)]
+    highest_median = valid_language_stats.sort_values("median_salary", ascending=False).iloc[0]
+    strongest_group = language_eval_df.sort_values("f1", ascending=False).iloc[0]
+
+    lines = [
+        "# Domain 6 — 전체 언어 및 개발자 특성 기반 고연봉 예측",
+        "",
+        "## 1. 분석 목적",
+        "",
+        "프로그래밍 언어 사용 여부와 경력·직무·학력·근무 형태·기업 규모로 연봉 중앙값 이상 여부를 예측한다.",
+        "",
+        "## 2. 대상 범위",
+        "",
+        f"- 목표 변수: 학습 데이터 연봉 중앙값(${result_payload['high_salary_threshold']:,.2f}) 이상이면 `HighSalary=1`",
+        f"- 수치형 특성: {', '.join(NUMERIC_FEATURES)}",
+        f"- 범주형 특성: {', '.join(result_payload['categorical_features'])}",
+        f"- 언어 특성: {len(LANGUAGE_FEATURES)}개 사용 여부",
+        "",
+        "## 3. 데이터 전처리",
+        "",
+        "- 공통 입력 `data/results.csv`를 직접 사용하며 Domain 1~5 산출물은 입력으로 사용하지 않는다.",
+        "- train/test를 먼저 분리하고 학습 데이터에서만 중앙값 임계값을 계산해 테스트 정보 누수를 방지한다.",
+        "- 수치형 중앙값 대치·표준화, 범주형 최빈값 대치·One-Hot Encoding을 ColumnTransformer로 구성한다.",
+        "- ResponseId, 연봉, 원본 언어 문자열과 목표 변수는 입력 특성에서 제외한다.",
+        "",
+        "## 4. 기술통계 및 모델 구조",
+        "",
+        f"- 전체/학습/테스트 표본: {result_payload['stats']['valid_model_rows']:,} / {result_payload['train_rows']:,} / {result_payload['test_rows']:,}",
+        f"- 학습 클래스 분포: {result_payload['train_target_distribution']}",
+        f"- 테스트 클래스 분포: {result_payload['test_target_distribution']}",
+        "- 비교 모델: Dummy, 언어 전용, 프로필 전용, 전체 LogisticRegression",
+        "- 최종 모델: 전처리와 LogisticRegression(class_weight='balanced')을 묶은 sklearn Pipeline",
+        f"- 표본 {REPORT_SAMPLE_MIN}명 이상 언어 중 중앙 연봉 최고: {highest_median['language']} (${highest_median['median_salary']:,.0f})",
+        "",
+        "## 5. 시각화 결과",
+        "",
+        "- 혼동행렬: [confusion_matrix.png](confusion_matrix.png)",
+        "- 전체 언어 인터랙티브 분석: [language_salary_report.html](language_salary_report.html)",
+        "- 상세 ML 보고서: [result.html](result.html)",
+        "",
+        "## 6. 모델 평가",
+        "",
+        "| 모델 | Accuracy | Precision | Recall | F1 | ROC-AUC |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for label, key in [
+        ("Dummy", "dummy"),
+        ("언어 전용", "language_only"),
+        ("프로필 전용", "profile_only"),
+        ("전체 모델", "full_model"),
+    ]:
+        row = metrics[key]
+        lines.append(
+            f"| {label} | {row['accuracy']:.3f} | {row['precision']:.3f} | "
+            f"{row['recall']:.3f} | {row['f1']:.3f} | {row['roc_auc']:.3f} |"
+        )
+    lines.extend(
+        [
+            "",
+            f"- 최종 모델 Average Precision: {full_metrics['average_precision']:.3f}",
+            f"- 언어 하위집합 중 최고 F1: {strongest_group['language']} ({strongest_group['f1']:.3f})",
+            "- 저장 모델: [high_salary_model.joblib](high_salary_model.joblib)",
+            f"- 저장 모델 재로드 검증: {'성공' if result_payload['model_reload_verified'] else '실패'}",
+            "",
+            "## 7. 결과 해석",
+            "",
+            "1. 전체 모델은 언어 전용 모델보다 F1과 ROC-AUC가 높아 경력·직무 등 프로필 특성이 중요한 예측 정보를 제공한다.",
+            "2. 프로필 전용 모델과 전체 모델의 성능 차이는 작아 언어 정보의 추가 기여는 제한적이다.",
+            "3. 로지스틱 회귀 계수는 연봉 증가액이나 인과 효과가 아니라 다른 변수를 함께 고려한 예측 연관 방향이다.",
+            "",
+            "### 계수가 큰 양의 특성",
+            "",
+        ]
+    )
     for _, row in positive_features.iterrows():
-        lines.append(f"- 양의 계수: {row['feature']} ({row['coefficient']:.3f})")
-    for _, row in negative_features.iterrows():
-        lines.append(f"- 음의 계수: {row['feature']} ({row['coefficient']:.3f})")
-    lines.append("- 언어 특성 계수는 language_coefficients.csv에 저장했다.")
-    lines.append("- 계수는 연봉 증가액이 아니라 상위 25% 예측과의 연관 방향을 나타낸다.")
-    lines.append("")
-    lines.append("## 13. 언어별 통계")
-    lines.append("언어별 사용 규모, 연봉 분포, 학습 기준 고연봉 비율을 계산했다.")
-    lines.append("")
-    lines.append("| 언어 | 사용자 수 | 사용 비율 | 평균 연봉 | 중앙 연봉 | 고연봉 비율 |")
-    lines.append("|---|---:|---:|---:|---:|---:|")
-    for _, row in language_stats_df.iterrows():
-        lines.append(f"| {row['language']} | {int(row['user_count'])} | {row['usage_rate']:.3f} | {row['mean_salary']:.2f} | {row['median_salary']:.2f} | {row['high_salary_rate']:.3f} |")
-    lines.append("")
-    lines.append("## 14. 언어별 테스트 평가")
-    lines.append("full_model을 테스트셋의 각 언어 사용 하위집합에 적용해 평가했다.")
-    lines.append("")
-    lines.append("| 언어 | 테스트 수 | 실제 고연봉자 수 | 예측 고연봉자 수 | 실제 고연봉 비율 | 예측 고연봉 비율 | Accuracy | F1 | ROC-AUC |")
-    lines.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|")
-    for _, row in language_eval_df.iterrows():
-        lines.append(f"| {row['language']} | {int(row['test_user_count'])} | {int(row['actual_high_salary_count'])} | {int(row['predicted_high_salary_count'])} | {row['actual_high_salary_rate']:.3f} | {row['predicted_high_salary_rate']:.3f} | {row['accuracy']:.3f} | {row['f1']:.3f} | {row['roc_auc']:.3f} |")
-    lines.append("")
-    lines.append("- 언어별 실제·예측 고연봉자 수와 비율, 상세 예측은 language_predictions.csv, 언어별 요약은 language_prediction_summary.csv에 저장했다.")
-    lines.append("")
-    lines.append("## 15. 모델 저장 및 검증")
-    lines.append(f"- 모델 저장 경로: {DOMAIN_ROOT / 'model.joblib'}")
-    lines.append("- Pipeline 전체를 저장했다.")
-    lines.append(f"- 재로드 검증 결과: {'성공' if result_payload['model_reload_verified'] else '실패'}")
-    lines.append("")
-    lines.append("## 16. 핵심 결론")
-    lines.append("- 실제 데이터를 기반으로 모델을 학습하고 평가했다.")
-    lines.append("- 언어 특성의 추가 예측 기여를 비교했으며, 결과는 model_comparison.csv와 model_metrics.json에 기록했다.")
-    lines.append("- 모델은 교육·연구용 분석으로만 사용해야 하며, 실제 채용·연봉 결정에 사용해서는 안 된다.")
-    lines.append("")
-    lines.append("## 17. 분석 한계")
-    lines.append("- Stack Overflow 설문은 무작위 표본이 아니다.")
-    lines.append("- 전체 개발자 모집단으로 일반화할 수 없다.")
-    lines.append("- 언어 사용 여부와 연봉 사이의 인과관계를 의미하지 않는다.")
-    lines.append("- 경력, 직무, 학력 외에도 산업, 지역, 회사, 직급, 숙련도 등이 영향을 줄 수 있다.")
-    lines.append("- 상위 25%는 현재 분석 표본 안의 상대적 기준이다.")
-    lines.append("- 여러 국가가 포함됐다면 국가별 임금 차이가 결과에 영향을 줄 수 있다.")
-    lines.append("- 모델 계수는 연봉 증가액이 아니다.")
-    lines.append("- 모델을 실제 채용, 연봉 책정, 인사 의사결정에 사용해서는 안 된다.")
+        lines.append(f"- {row['feature']}: {row['coefficient']:.3f}")
+    lines.extend(["", "### 양의 방향 언어 특성", ""])
+    for _, row in positive_languages.iterrows():
+        lines.append(f"- {row['language']}: {row['coefficient']:.3f}")
+    lines.extend(
+        [
+            "",
+            "## 8. 분석 한계",
+            "",
+            "- Stack Overflow 자기보고 설문은 무작위 표본이 아니며 국가별 임금·환율·생활비 차이를 충분히 통제하지 못했다.",
+            "- 단일 train/test 분할 결과이므로 교차검증과 외부 연도 검증이 필요하며, 채용·연봉 책정에 직접 사용해서는 안 된다.",
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -2427,7 +2377,7 @@ def create_language_salary_markdown(
         "",
         "## 핵심 해석",
         "",
-        "이번 보고서는 연봉 상위 25% 분류 모델이 아니라 언어 사용자 집단의 연봉 수준과 분포를 주제로 한다.",
+        "이번 보고서는 중앙값 기준 분류 모델이 아니라 언어 사용자 집단의 연봉 수준과 분포를 주제로 한다.",
         "언어별 차이는 국가, 경력, 직무, 회사 규모 차이가 함께 반영된 관찰 결과이며 인과관계를 의미하지 않는다.",
         "",
         "## 언어별 연봉 통계",
@@ -2483,7 +2433,7 @@ def create_salary_readme_content(result_payload: dict[str, Any]) -> str:
         "## 핵심 분석 주제",
         "",
         "언어 사용자 집단별 사용자 수, 평균 연봉, 중앙 연봉, 분포, 사분위 범위와 실제 고연봉 비율을 비교합니다.",
-        "연봉 상위 25% 분류 모델은 언어별 연봉 분석을 보조하는 부록으로만 사용합니다.",
+        "연봉 중앙값 기준 분류 모델은 언어별 연봉 분석을 보조하는 부록으로만 사용합니다.",
         "",
         "## 데이터",
         "",
@@ -2495,8 +2445,8 @@ def create_salary_readme_content(result_payload: dict[str, Any]) -> str:
         "## 실행",
         "",
         "```bash",
-        "cd /Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml",
-        "./domain6_ml/.venv/bin/python -m domain6_ml.model",
+        "cd stackoverflow-salary-analysis",
+        "python -m domain6_ml.model",
         "```",
         "",
         "## 주요 산출물",
@@ -2507,6 +2457,9 @@ def create_salary_readme_content(result_payload: dict[str, Any]) -> str:
         "- [language_statistics.csv](language_statistics.csv): 언어별 연봉·분포·고연봉 통계",
         "- [language_evaluation.csv](language_evaluation.csv): 언어 사용자 그룹별 분류 모델 보조 진단",
         "- [language_prediction_summary.csv](language_prediction_summary.csv): 언어별 실제·예측 고연봉 요약",
+        "- [model_metrics.json](model_metrics.json): Accuracy·Precision·Recall·F1 등 평가 지표",
+        "- [confusion_matrix.png](confusion_matrix.png): 테스트 데이터 혼동행렬",
+        "- [high_salary_model.joblib](high_salary_model.joblib): 전처리와 모델을 묶어 저장한 Pipeline",
         "",
         "## 주의사항",
         "",
@@ -2565,7 +2518,7 @@ def run_ml_analysis(input_path: Path | None = None) -> dict[str, Any]:
     if len(pd.unique(y_train)) < 2 or len(pd.unique(y_test)) < 2:
         raise AnalysisError("학습 또는 테스트 데이터가 단일 클래스만 포함합니다.")
 
-    feature_columns = [col for col in model_df.columns if col not in LEAKAGE_COLUMNS and col != "HighSalaryTop25"]
+    feature_columns = [col for col in model_df.columns if col not in LEAKAGE_COLUMNS and col != "HighSalary"]
     X_train = train_df[feature_columns].copy()
     X_test = test_df[feature_columns].copy()
     validate_no_data_leakage(X_train, X_test, y_train, y_test)
@@ -2700,7 +2653,7 @@ def run_ml_analysis(input_path: Path | None = None) -> dict[str, Any]:
         str(DOMAIN_ROOT / "language_predictions.csv"),
         str(DOMAIN_ROOT / "language_prediction_summary.csv"),
         str(DOMAIN_ROOT / "prediction_samples.csv"),
-        str(DOMAIN_ROOT / "model.joblib"),
+        str(DOMAIN_ROOT / "high_salary_model.joblib"),
         str(DOMAIN_ROOT / "model_metrics.json"),
         str(DOMAIN_ROOT / "model_metadata.json"),
         str(DOMAIN_ROOT / "language_salary_report.html"),
@@ -2709,8 +2662,20 @@ def run_ml_analysis(input_path: Path | None = None) -> dict[str, Any]:
     ]
 
     with (DOMAIN_ROOT / "result.json").open("w", encoding="utf-8") as fh:
-        json.dump(create_result_json(result_payload, output_files), fh, ensure_ascii=False, indent=2)
-    markdown_text = create_language_salary_markdown(result_payload, language_stats_df, language_eval_df)
+        json.dump(
+            report_json_safe(create_result_json(result_payload, output_files)),
+            fh,
+            ensure_ascii=False,
+            indent=2,
+            allow_nan=False,
+        )
+    markdown_text = create_result_markdown(
+        result_payload,
+        coeff_df,
+        lang_coeff_df,
+        language_stats_df,
+        language_eval_df,
+    )
     (DOMAIN_ROOT / "result.md").write_text(markdown_text, encoding="utf-8")
     salary_report_path = create_language_salary_html_report(
         language_stats_df,
@@ -2721,8 +2686,18 @@ def run_ml_analysis(input_path: Path | None = None) -> dict[str, Any]:
         language_prediction_summary_df,
         model_results,
     )
-    (DOMAIN_ROOT / "result.html").write_text(salary_report_path.read_text(encoding="utf-8"), encoding="utf-8")
-    (DOMAIN_ROOT / "README.md").write_text(create_salary_readme_content(result_payload), encoding="utf-8")
+    (DOMAIN_ROOT / "result.html").write_text(
+        create_result_html(
+            result_payload,
+            coeff_df,
+            lang_coeff_df,
+            language_stats_df,
+            language_eval_df,
+            cm_df,
+        ),
+        encoding="utf-8",
+    )
+    (DOMAIN_ROOT / "README.md").write_text(create_readme_content(result_payload), encoding="utf-8")
 
     print_status("============================================================")
     print_status("Domain 6 고연봉 예측 완료")
@@ -2785,10 +2760,7 @@ def run_ml_analysis(input_path: Path | None = None) -> dict[str, Any]:
 
 def main() -> None:
     """스크립트 진입점."""
-    try:
-        run_ml_analysis()
-    except Exception as exc:  # pragma: no cover - defensive path
-        print(f"[오류][최상위] {exc}")
+    run_ml_analysis()
 
 
 if __name__ == "__main__":

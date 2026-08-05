@@ -167,6 +167,15 @@ def clean_data(
     df = normalize_schema(raw)
     initial_rows = len(df)
 
+    # 응답 ID가 있는 행만 중복 검사한다. 원본에 ResponseId 컬럼이 없는 경우
+    # normalize_schema()가 결측 컬럼을 추가하므로, 결측 ID까지 중복으로 제거하면
+    # 정상 행이 사라질 수 있다.
+    valid_response_id = df["ResponseId"].notna()
+    duplicate_mask = valid_response_id & df["ResponseId"].duplicated(keep="first")
+    duplicate_rows_removed = int(duplicate_mask.sum())
+    df = df.loc[~duplicate_mask].copy()
+    rows_after_duplicate_filter = len(df)
+
     df[SALARY_COLUMN] = pd.to_numeric(df[SALARY_COLUMN], errors="coerce")
     df[EXPERIENCE_COLUMN] = df[EXPERIENCE_COLUMN].map(parse_experience)
     df = df.dropna(subset=[SALARY_COLUMN, LANGUAGE_COLUMN]).copy()
@@ -208,6 +217,8 @@ def clean_data(
     metadata: dict[str, object] = {
         "survey_year": year,
         "initial_rows": initial_rows,
+        "duplicate_rows_removed": duplicate_rows_removed,
+        "rows_after_duplicate_filter": rows_after_duplicate_filter,
         "rows_after_required_value_filter": after_required_filter,
         "rows_after_country_filter": after_country_filter,
         "final_rows": len(df),
