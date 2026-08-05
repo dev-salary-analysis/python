@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Domain 6 결과 보고서</title>
+  <style>
+    :root { --navy: #17324d; --blue: #2563eb; --ink: #1f2937; --muted: #64748b; --line: #dbe3ec; --soft: #f5f8fc; --green: #087f5b; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eef3f8; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; line-height: 1.65; }
+    .page { max-width: 1240px; margin: 0 auto; background: white; min-height: 100vh; padding: 44px 56px 72px; }
+    .cover { border-bottom: 4px solid var(--blue); padding-bottom: 30px; margin-bottom: 30px; }
+    .eyebrow { color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { color: var(--navy); font-size: 38px; line-height: 1.2; margin: 10px 0 12px; }
+    h2 { color: var(--navy); font-size: 24px; margin: 42px 0 12px; padding-bottom: 7px; border-bottom: 2px solid var(--line); }
+    h3 { color: var(--navy); margin-top: 26px; }
+    p { margin: 8px 0 14px; }
+    .subtitle { color: var(--muted); font-size: 17px; max-width: 920px; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0; }
+    .card { border: 1px solid var(--line); border-radius: 12px; padding: 17px; background: linear-gradient(135deg, #fff, var(--soft)); }
+    .card .label { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .card .value { color: var(--navy); font-size: 27px; font-weight: 800; margin-top: 3px; }
+    .callout { border-left: 5px solid var(--blue); background: #eff6ff; padding: 16px 19px; margin: 18px 0; }
+    .warning { border-left-color: #d97706; background: #fff7ed; }
+    table { border-collapse: collapse; width: 100%; margin: 13px 0 20px; font-size: 13px; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: right; vertical-align: top; }
+    th { background: var(--navy); color: white; font-weight: 700; white-space: nowrap; }
+    td:first-child, th:first-child { text-align: left; }
+    tr:nth-child(even) td { background: #fafcff; }
+    .wide { overflow-x: auto; }
+    .tag { display: inline-block; border-radius: 999px; background: #e8f5ef; color: var(--green); padding: 2px 9px; font-size: 12px; font-weight: 700; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .figure { text-align: center; border: 1px solid var(--line); border-radius: 12px; padding: 15px; background: var(--soft); }
+    .figure img { max-width: 100%; height: auto; }
+    ul { padding-left: 22px; }
+    li { margin: 4px 0; }
+    code { background: #f1f5f9; border-radius: 4px; padding: 2px 5px; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    @media (max-width: 850px) { .page { padding: 28px 20px 50px; } .cards { grid-template-columns: repeat(2, 1fr); } .two-col { grid-template-columns: 1fr; } h1 { font-size: 30px; } }
+    @media print { body { background: white; } .page { max-width: none; padding: 0; } h2 { break-after: avoid; } table { break-inside: avoid; } .footer { display: none; } }
+  </style>
+</head>
+<body>
+<main class="page">
+  <header class="cover">
+    <div class="eyebrow">Domain 6 · Machine Learning Report</div>
+    <h1>프로그래밍 언어 및 개발자 특성 기반<br>고연봉 예측 분석 보고서</h1>
+    <p class="subtitle">Stack Overflow 개발자 설문 데이터를 이용해 연봉 중앙값 이상 여부를 분류하고, 사용언어별 연봉 통계·테스트 성능·예측 결과를 함께 분석한 상세 보고서입니다.</p>
+    <p class="meta">생성 시각: 학습 실행 결과 · 입력 행 수: 21,678 · 분석 유효 행 수: 21,678</p>
+  </header>
+
+  <h2>1. 핵심 요약</h2>
+  <div class="cards">
+    <div class="card"><div class="label">최종 모델 ROC-AUC</div><div class="value">0.890</div></div>
+    <div class="card"><div class="label">최종 모델 F1</div><div class="value">0.810</div></div>
+    <div class="card"><div class="label">고연봉 임계값</div><div class="value">$76,340.50</div></div>
+    <div class="card"><div class="label">모델 재로드 검증</div><div class="value">성공</div></div>
+  </div>
+  <div class="callout"><strong>요약 결론.</strong> 전체 특성을 사용한 Logistic Regression은 테스트셋에서 ROC-AUC 0.890, F1 0.810을 기록했습니다. 다만 profile-only 모델 대비 개선 폭은 F1 0.008, ROC-AUC 0.005로, 언어 정보보다 경력·직무·국가 등 프로필 정보의 영향이 더 큽니다.</div>
+  <ul>
+    <li>입력 파일: <code>/Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv</code></li>
+    <li>학습/테스트 표본: 17,342 / 4,336</li>
+    <li>고연봉 정의: <strong>ConvertedCompYearly가 학습 데이터 중앙값 이상</strong></li>
+    <li>분석 기준 임계값: <strong>$76,340.50</strong></li>
+    <li>분석 대상 언어: 15개 · 테스트 데이터에서 실제 사용자가 존재하는 언어: 14개</li>
+  </ul>
+
+  <h2>2. 분석 목적과 해석 범위</h2>
+  <p>본 프로젝트의 예측 타깃은 실제 연봉 금액 자체가 아니라, 응답자의 연봉이 학습 데이터 중앙값 이상인지 여부입니다. 따라서 결과의 “예측 확률”은 특정 언어를 사용하면 연봉이 얼마가 된다는 의미가 아니라, 해당 응답자가 고연봉 그룹에 속할 확률을 뜻합니다.</p>
+  <p>언어별 통계는 관측된 연봉 분포를 보여주며, 언어별 평가는 최종 full_model을 각 언어 사용자의 테스트 하위집합에 적용한 결과입니다. 언어별 결과에는 국가·경력·직무·학력 차이가 섞여 있으므로 인과관계나 언어 자체의 순수한 효과로 해석해서는 안 됩니다.</p>
+
+  <h2>3. 데이터와 타깃 정의</h2>
+  <div class="wide">
+  <table>
+    <thead><tr><th>항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>원본 데이터</td><td>/Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv</td></tr>
+      <tr><td>전체 행 수</td><td>21,678</td></tr>
+      <tr><td>최종 유효 행 수</td><td>21,678</td></tr>
+      <tr><td>학습 / 테스트 분할</td><td>17,342 / 4,336 · random_state=42</td></tr>
+      <tr><td>학습 고연봉 비율</td><td>0.500</td></tr>
+      <tr><td>테스트 고연봉 비율</td><td>0.492</td></tr>
+      <tr><td>결측·비정상 제거</td><td>연봉 결측 0 · 연봉 0 이하 0 · 언어 결측 0 · 중복 0</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout warning"><strong>주의.</strong> 중앙값 임계값은 현재 데이터의 상대적 기준입니다. 국가별 물가·환율·직무 구성·설문 응답 편향이 포함되어 있으므로 다른 국가나 다른 연도에 그대로 일반화할 수 없습니다.</div>
+
+  <h2>4. 특성 설계와 전처리</h2>
+  <div class="two-col">
+    <div><h3>수치형 특성</h3><ul><li>YearsCodeProNumeric: 전문 개발 경력</li><li>LanguageCount: 응답자가 선택한 전체 언어 수</li></ul></div>
+    <div><h3>범주형 특성</h3><ul><li>RemoteWork</li><li>DevType</li><li>EdLevel</li><li>Employment</li><li>OrgSize</li><li>Country</li></ul></div>
+  </div>
+  <p>언어 사용 여부는 Python, R, Julia, Java, Kotlin, Scala, JavaScript, TypeScript, PHP, C, C++, Rust, C#, Go, Swift를 각각 0/1 특성으로 만들었습니다. Java와 JavaScript, C와 C++, C#는 세미콜론 단위로 분리하여 문자열 부분 일치 오류를 피했습니다. 연봉 원본과 ResponseId는 모델 입력에서 제외했습니다.</p>
+
+  <h2>5. 모델 비교와 최종 성능</h2>
+  <table>
+    <thead>
+      <tr><th>모델</th><th>Accuracy</th><th>Balanced Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th><th>Average Precision</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>dummy</td><td>0.508</td><td>0.500</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.500</td><td>0.492</td></tr><tr><td>language_only</td><td>0.563</td><td>0.564</td><td>0.550</td><td>0.624</td><td>0.584</td><td>0.595</td><td>0.566</td></tr><tr><td>profile_only</td><td>0.804</td><td>0.804</td><td>0.796</td><td>0.808</td><td>0.802</td><td>0.885</td><td>0.874</td></tr><tr><td>full_model</td><td>0.810</td><td>0.811</td><td>0.800</td><td>0.821</td><td>0.810</td><td>0.890</td><td>0.878</td></tr>
+    </tbody>
+  </table>
+  <p><span class="tag">평가 해석</span> 클래스 불균형이 있으므로 Accuracy 하나만 보지 않고 Balanced Accuracy, F1, ROC-AUC, Average Precision을 함께 사용했습니다. 최종 모델은 고연봉 클래스에 대해 Recall 0.821, Precision 0.800을 기록했습니다.</p>
+
+  <h2>6. 혼동행렬과 예측 오류</h2>
+  <div class="two-col">
+    <div class="figure"><img src="confusion_matrix.png" alt="최종 모델 혼동행렬"><p class="meta">실제/예측 고연봉 여부 혼동행렬</p></div>
+    <div><table><thead><tr><th>실제/예측</th><th>Below Median</th><th>High Salary</th></tr></thead><tbody><tr><th>Actual_0</th><td>1763</td><td>439</td></tr><tr><th>Actual_1</th><td>383</td><td>1751</td></tr></tbody></table><ul><li>실제 고연봉을 고연봉으로 맞힌 수: 1,751건</li><li>실제 고연봉을 놓친 수: 383건</li><li>고연봉으로 예측했으나 실제로는 아닌 수: 439건</li><li>실제 저연봉을 저연봉으로 맞힌 수: 1,763건</li><li>고연봉 Recall이 높지만, Precision은 약 0.800이므로 예측 고연봉 판정의 약 0.200는 오탐입니다.</li></ul></div>
+  </div>
+
+  <h2>7. 주요 예측 특성</h2>
+  <p>아래 계수는 Logistic Regression의 고연봉 분류 방향을 나타냅니다. 연봉 증가액이나 인과효과가 아니며, 범주형 변수는 기준 범주와 비교한 상대적 계수입니다.</p>
+  <div class="wide"><table><thead><tr><th>특성</th><th>계수</th><th>방향</th></tr></thead><tbody><tr><td>cat__Country_Switzerland</td><td>4.152</td><td>positive</td></tr><tr><td>cat__Country_United States of America</td><td>3.415</td><td>positive</td></tr><tr><td>cat__Country_Denmark</td><td>2.967</td><td>positive</td></tr><tr><td>cat__Country_Israel</td><td>2.435</td><td>positive</td></tr><tr><td>cat__Country_Norway</td><td>2.337</td><td>positive</td></tr><tr><td>cat__Country_Australia</td><td>2.156</td><td>positive</td></tr><tr><td>cat__Country_Ireland</td><td>2.154</td><td>positive</td></tr><tr><td>cat__Employment_Retired</td><td>-2.041</td><td>negative</td></tr><tr><td>cat__DevType_Academic researcher</td><td>-1.947</td><td>negative</td></tr><tr><td>cat__Country_Hong Kong (S.A.R.)</td><td>1.857</td><td>positive</td></tr><tr><td>cat__DevType_Student</td><td>-1.832</td><td>negative</td></tr><tr><td>cat__Country_Singapore</td><td>1.815</td><td>positive</td></tr><tr><td>cat__Country_Luxembourg</td><td>1.799</td><td>positive</td></tr><tr><td>cat__Country_Nigeria</td><td>-1.756</td><td>negative</td></tr><tr><td>cat__Country_United Kingdom of Great Britain and Northern Ireland</td><td>1.692</td><td>positive</td></tr><tr><td>cat__Country_Cyprus</td><td>1.661</td><td>positive</td></tr><tr><td>cat__Country_Germany</td><td>1.635</td><td>positive</td></tr><tr><td>cat__Country_Canada</td><td>1.625</td><td>positive</td></tr><tr><td>cat__DevType_Engineering manager</td><td>1.574</td><td>positive</td></tr><tr><td>cat__Country_Iceland</td><td>1.564</td><td>positive</td></tr></tbody></table></div>
+
+  <h2>8. 언어별 연봉 통계</h2>
+  <p>전체 유효 데이터에서 계산한 관측 통계입니다. 고연봉 비율은 학습 데이터에서 계산된 임계값 $76,340.50 이상인 비율입니다.</p>
+  <div class="callout"><strong>관측상 상위 언어.</strong> 고연봉 비율은 Scala가 0.618, 중앙 연봉은 Scala가 $95,674.50로 가장 높았습니다. 표본 수와 국가·직무 분포가 다르므로 단순 순위로 언어의 우열을 판단하면 안 됩니다.</div>
+
+  <h2>9. 언어별 테스트 평가</h2>
+  <table>
+    <thead><tr><th>언어</th><th>테스트 수</th><th>실제 고연봉자 수</th><th>예측 고연봉자 수</th><th>실제 고연봉 비율</th><th>예측 고연봉 비율</th><th>Accuracy</th><th>F1</th><th>ROC-AUC</th></tr></thead>
+    <tbody><tr><td>JavaScript</td><td>2918</td><td>1408</td><td>1466</td><td>0.483</td><td>0.502</td><td>0.825</td><td>0.823</td><td>0.897</td></tr><tr><td>Python</td><td>2523</td><td>1273</td><td>1309</td><td>0.505</td><td>0.519</td><td>0.815</td><td>0.820</td><td>0.896</td></tr><tr><td>TypeScript</td><td>1976</td><td>1011</td><td>1054</td><td>0.512</td><td>0.533</td><td>0.818</td><td>0.826</td><td>0.893</td></tr><tr><td>Java</td><td>1268</td><td>585</td><td>603</td><td>0.461</td><td>0.476</td><td>0.823</td><td>0.811</td><td>0.904</td></tr><tr><td>C#</td><td>1244</td><td>595</td><td>612</td><td>0.478</td><td>0.492</td><td>0.824</td><td>0.819</td><td>0.902</td></tr><tr><td>C++</td><td>891</td><td>407</td><td>419</td><td>0.457</td><td>0.470</td><td>0.809</td><td>0.794</td><td>0.883</td></tr><tr><td>C</td><td>797</td><td>361</td><td>368</td><td>0.453</td><td>0.462</td><td>0.816</td><td>0.798</td><td>0.888</td></tr><tr><td>PHP</td><td>796</td><td>303</td><td>295</td><td>0.381</td><td>0.371</td><td>0.809</td><td>0.746</td><td>0.882</td></tr><tr><td>Go</td><td>752</td><td>435</td><td>446</td><td>0.578</td><td>0.593</td><td>0.826</td><td>0.851</td><td>0.887</td></tr><tr><td>Rust</td><td>625</td><td>331</td><td>367</td><td>0.530</td><td>0.587</td><td>0.779</td><td>0.802</td><td>0.863</td></tr><tr><td>Kotlin</td><td>464</td><td>233</td><td>249</td><td>0.502</td><td>0.537</td><td>0.819</td><td>0.826</td><td>0.893</td></tr><tr><td>Swift</td><td>239</td><td>150</td><td>156</td><td>0.628</td><td>0.653</td><td>0.816</td><td>0.856</td><td>0.865</td></tr><tr><td>R</td><td>197</td><td>98</td><td>96</td><td>0.497</td><td>0.487</td><td>0.838</td><td>0.835</td><td>0.914</td></tr><tr><td>Scala</td><td>104</td><td>62</td><td>65</td><td>0.596</td><td>0.625</td><td>0.760</td><td>0.803</td><td>0.854</td></tr><tr><td>Julia</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody>
+  </table>
+
+  <p>언어별 고연봉자 수는 테스트 하위집합에서 실제 타깃 1의 개수와 모델 예측 1의 개수를 각각 표시합니다. 언어별 ROC-AUC는 해당 언어 사용자의 테스트 하위집합에서 모델의 순위화 성능을 뜻합니다. 표본 수가 작은 언어의 지표는 불안정할 수 있고, 사용자가 없는 언어는 평가 지표를 계산할 수 없습니다.</p>
+
+  <h2>10. 언어별 예측 요약</h2>
+  <p>아래 표는 각 언어 사용자의 테스트 데이터에서 실제 고연봉자 수, 모델의 예측 고연봉자 수와 비율, 평균 예측 확률, 분류 성능을 요약한 것입니다. 상세 응답자 단위 결과는 <a href="language_predictions.csv">language_predictions.csv</a>에서 확인할 수 있습니다.</p>
+  <div class="wide"><table><thead><tr><th>언어</th><th>테스트 수</th><th>실제 고연봉자 수</th><th>예측 고연봉자 수</th><th>실제 고연봉 비율</th><th>예측 고연봉 비율</th><th>평균 예측 확률</th><th>Accuracy</th><th>F1</th></tr></thead><tbody><tr><td>JavaScript</td><td>2918</td><td>1408</td><td>1466</td><td>0.483</td><td>0.502</td><td>0.496</td><td>0.825</td><td>0.823</td></tr><tr><td>Python</td><td>2523</td><td>1273</td><td>1309</td><td>0.505</td><td>0.519</td><td>0.506</td><td>0.815</td><td>0.820</td></tr><tr><td>TypeScript</td><td>1976</td><td>1011</td><td>1054</td><td>0.512</td><td>0.533</td><td>0.523</td><td>0.818</td><td>0.826</td></tr><tr><td>Java</td><td>1268</td><td>585</td><td>603</td><td>0.461</td><td>0.476</td><td>0.480</td><td>0.823</td><td>0.811</td></tr><tr><td>C#</td><td>1244</td><td>595</td><td>612</td><td>0.478</td><td>0.492</td><td>0.487</td><td>0.824</td><td>0.819</td></tr><tr><td>C++</td><td>891</td><td>407</td><td>419</td><td>0.457</td><td>0.470</td><td>0.466</td><td>0.809</td><td>0.794</td></tr><tr><td>C</td><td>797</td><td>361</td><td>368</td><td>0.453</td><td>0.462</td><td>0.462</td><td>0.816</td><td>0.798</td></tr><tr><td>PHP</td><td>796</td><td>303</td><td>295</td><td>0.381</td><td>0.371</td><td>0.386</td><td>0.809</td><td>0.746</td></tr><tr><td>Go</td><td>752</td><td>435</td><td>446</td><td>0.578</td><td>0.593</td><td>0.573</td><td>0.826</td><td>0.851</td></tr><tr><td>Rust</td><td>625</td><td>331</td><td>367</td><td>0.530</td><td>0.587</td><td>0.558</td><td>0.779</td><td>0.802</td></tr><tr><td>Kotlin</td><td>464</td><td>233</td><td>249</td><td>0.502</td><td>0.537</td><td>0.524</td><td>0.819</td><td>0.826</td></tr><tr><td>Swift</td><td>239</td><td>150</td><td>156</td><td>0.628</td><td>0.653</td><td>0.625</td><td>0.816</td><td>0.856</td></tr><tr><td>R</td><td>197</td><td>98</td><td>96</td><td>0.497</td><td>0.487</td><td>0.494</td><td>0.838</td><td>0.835</td></tr><tr><td>Scala</td><td>104</td><td>62</td><td>65</td><td>0.596</td><td>0.625</td><td>0.599</td><td>0.760</td><td>0.803</td></tr><tr><td>Julia</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+
+  <h2>11. 언어 계수 분석</h2>
+  <p>언어 계수는 다른 언어·국가·직무·경력 특성을 함께 넣은 full_model에서의 조건부 연관 방향입니다. 여러 언어를 동시에 사용하는 응답자가 많기 때문에 단일 언어의 독립적인 연봉 효과로 해석할 수 없습니다.</p>
+  <div class="wide"><table><thead><tr><th>언어</th><th>계수</th><th>방향</th></tr></thead><tbody><tr><td>Scala</td><td>0.556</td><td>positive</td></tr><tr><td>PHP</td><td>-0.543</td><td>negative</td></tr><tr><td>TypeScript</td><td>0.399</td><td>positive</td></tr><tr><td>Go</td><td>0.373</td><td>positive</td></tr><tr><td>Swift</td><td>0.291</td><td>positive</td></tr><tr><td>C#</td><td>-0.276</td><td>negative</td></tr><tr><td>Rust</td><td>0.269</td><td>positive</td></tr><tr><td>Kotlin</td><td>0.186</td><td>positive</td></tr><tr><td>R</td><td>-0.173</td><td>negative</td></tr><tr><td>JavaScript</td><td>-0.085</td><td>negative</td></tr><tr><td>Java</td><td>-0.082</td><td>negative</td></tr><tr><td>C</td><td>-0.037</td><td>negative</td></tr><tr><td>Python</td><td>-0.005</td><td>negative</td></tr><tr><td>C++</td><td>0.004</td><td>positive</td></tr><tr><td>Julia</td><td>0.000</td><td>neutral</td></tr></tbody></table></div>
+
+  <h2>12. 생성된 산출물</h2>
+  <ul>
+    <li><a href="model_comparison.csv">model_comparison.csv</a></li><li><a href="classification_report.csv">classification_report.csv</a></li><li><a href="confusion_matrix.csv">confusion_matrix.csv</a></li><li><a href="confusion_matrix.png">confusion_matrix.png</a></li><li><a href="feature_coefficients.csv">feature_coefficients.csv</a></li><li><a href="language_coefficients.csv">language_coefficients.csv</a></li><li><a href="language_statistics.csv">language_statistics.csv</a></li><li><a href="language_evaluation.csv">language_evaluation.csv</a></li><li><a href="language_predictions.csv">language_predictions.csv</a></li><li><a href="language_prediction_summary.csv">language_prediction_summary.csv</a></li><li><a href="prediction_samples.csv">prediction_samples.csv</a></li><li><a href="high_salary_model.joblib">high_salary_model.joblib</a></li><li><a href="model_metrics.json">model_metrics.json</a></li><li><a href="model_metadata.json">model_metadata.json</a></li><li><a href="result.md">result.md</a></li><li><a href="result.html">result.html</a></li>
+  </ul>
+  <p>HTML 보고서 외에도 CSV는 재분석용 원자료, JSON은 구조화된 메타데이터와 결과 요약, JOBLIB 파일은 재사용 가능한 학습 Pipeline입니다.</p>
+
+  <h2>13. 결론과 한계</h2>
+  <ol>
+    <li>현재 모델은 전체 개발자의 연봉 중앙값 이상 여부를 분류하는 성능을 평가했습니다.</li>
+    <li>언어별 통계를 통해 Go, Swift, Scala 등에서 상대적으로 높은 고연봉 비율이 관측되었지만, 이는 국가·직무·경력과 결합된 결과입니다.</li>
+    <li>언어만 사용한 모델보다 프로필-only 모델이 훨씬 강하므로, 사용언어 단독으로 고연봉을 설명하기는 어렵습니다.</li>
+    <li>평가는 단일 랜덤 분할 기준이므로 교차검증·연도별 검증·외부 데이터 검증이 추가로 필요합니다.</li>
+    <li>Stack Overflow 설문은 무작위 모집단 조사가 아니며, 본 결과를 채용·연봉 책정·인사 의사결정에 사용해서는 안 됩니다.</li>
+  </ol>
+  <div class="footer">Domain 6 분석 보고서 · 교육·연구용 결과 · 타깃은 실제 연봉 금액이 아닌 중앙값 기준 분류</div>
+</main>
+</body>
+</html>

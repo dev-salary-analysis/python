@@ -1,3 +1,3 @@
-language,user_count,salary_mean,salary_median,salary_std,experience_mean,experience_median,top_devtype,top_devtype_share
-Python,12457,92075.49201252309,76570.0,72043.05866230832,13.052315538372953,10.0,"Developer, full-stack",0.2637071526049611
-R,984,86429.71849593495,71328.5,69283.48692059985,13.84873949579832,11.0,"Developer, full-stack",0.14735772357723578
+language,user_count,salary_mean,salary_median,salary_std,salary_q1,salary_q3,experience_mean,experience_median,top_devtype,top_devtype_share
+Python,12457,92075.49201252309,76570.0,72043.05866230832,40605.0,126000.0,13.052315538372953,10.0,"Developer, full-stack",0.2637071526049611
+R,984,86429.71849593495,71328.5,69283.48692059985,35965.0,120000.0,13.84873949579832,11.0,"Developer, full-stack",0.14735772357723578

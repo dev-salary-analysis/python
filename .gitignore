@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.DS_Store
 *.py[codz]
 *$py.class
 
@@ -218,5 +219,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-.DS_Store

@@ -1,4 +1,4 @@
-Language,Users,MeanSalary,MedianSalary,MeanExperience,MedianExperience
-C,3812,89683.14375655823,75410.0,13.978751311647429,10.0
-C++,4330,90759.99376443418,75410.0,13.726558891454966,10.0
-Rust,2948,101297.87313432836,83571.0,11.917910447761194,10.0
+﻿Language,Users,MeanSalary,MedianSalary,SalaryStd,SalaryQ1,SalaryQ3,MeanExperience,MedianExperience,TopDevType
+C,3972,87060.965,72496.5,72173.369,34804.0,120000.0,13.979,10.0,"Developer, full-stack"
+C++,4480,88744.856,73516.0,72937.637,37093.75,120000.0,13.727,10.0,"Developer, full-stack"
+Rust,3031,99774.385,82000.0,76317.925,46406.0,136141.0,11.918,10.0,"Developer, full-stack"

@@ -8,6 +8,7 @@ from domain2_jvm.analysis import (
     LANGUAGES,
     build_summary,
     calculate_correlations,
+    compare_pandas_polars,
     welch_salary_test,
 )
 
@@ -41,6 +42,15 @@ class Domain2AnalysisTest(unittest.TestCase):
         self.assertEqual(correlation.shape, (5, 5))
         self.assertTrue(correlation.ge(-1).all().all())
         self.assertTrue(correlation.le(1).all().all())
+
+    def test_pandas_polars_material_results_match(self) -> None:
+        comparison = compare_pandas_polars()
+        self.assertEqual(comparison["Rows"].nunique(), 1)
+        self.assertEqual(comparison["Columns"].nunique(), 1)
+        self.assertTrue(comparison["ColumnsMatch"].all())
+        self.assertTrue(comparison["NumericSummaryMatch"].all())
+        self.assertEqual(comparison["SalaryMeanUSD"].round(6).nunique(), 1)
+        self.assertEqual(comparison["SalaryMedianUSD"].round(6).nunique(), 1)
 
 if __name__ == "__main__":
     unittest.main()

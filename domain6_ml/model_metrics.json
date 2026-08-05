@@ -1,0 +1,60 @@
+{
+  "target_name": "HighSalary",
+  "target_definition": "학습 데이터의 연봉 중앙값 이상 여부",
+  "high_salary_quantile": 0.5,
+  "salary_threshold": 76340.5,
+  "total_loaded_rows": 21678,
+  "valid_model_rows": 21678,
+  "train_rows": 17342,
+  "test_rows": 4336,
+  "train_class_distribution": {
+    "0": 8671,
+    "1": 8671
+  },
+  "test_class_distribution": {
+    "0": 2202,
+    "1": 2134
+  },
+  "dummy_classifier": {
+    "accuracy": 0.5078413284132841,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.5,
+    "average_precision": 0.4921586715867159
+  },
+  "language_only": {
+    "accuracy": 0.5631918819188192,
+    "balanced_accuracy": 0.5641335686140316,
+    "precision": 0.5495049504950495,
+    "recall": 0.6241799437675727,
+    "f1": 0.5844668714348399,
+    "roc_auc": 0.5947519806055158,
+    "average_precision": 0.5662818414746976
+  },
+  "profile_only": {
+    "accuracy": 0.8035055350553506,
+    "balanced_accuracy": 0.8035801993076074,
+    "precision": 0.7956642066420664,
+    "recall": 0.8083411433926898,
+    "f1": 0.8019525801952581,
+    "roc_auc": 0.8851339244292699,
+    "average_precision": 0.8744679890664647
+  },
+  "full_model": {
+    "accuracy": 0.8104243542435424,
+    "balanced_accuracy": 0.8105803108190816,
+    "precision": 0.7995433789954338,
+    "recall": 0.8205248359887535,
+    "f1": 0.8098982423681776,
+    "roc_auc": 0.8904089066172272,
+    "average_precision": 0.8780135352019572
+  },
+  "performance_differences": {
+    "language_only_vs_full_model_f1": 0.22543137093333776,
+    "profile_only_vs_full_model_f1": 0.007945662172919588,
+    "profile_only_vs_full_model_roc_auc": 0.0052749821879573,
+    "profile_only_vs_full_model_average_precision": 0.0035455461354925166
+  }
+}

@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -22,11 +25,7 @@ ORG_COLUMN = "OrgSize"
 
 OUTPUT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = OUTPUT_DIR.parent
-INPUT_CANDIDATES = (
-    PROJECT_ROOT / "result.csv",
-    PROJECT_ROOT / "data" / "result.csv",
-    PROJECT_ROOT / "data" / "results.csv",
-)
+INPUT_PATH = PROJECT_ROOT / "data" / "results.csv"
 
 EXPERIENCE_BINS = [-np.inf, 2, 5, 10, 15, 20, np.inf]
 EXPERIENCE_LABELS = ["0–2 years", "3–5 years", "6–10 years", "11–15 years", "16–20 years", "21+ years"]
@@ -54,11 +53,9 @@ ORG_MAP = {
 
 
 def find_input_file() -> Path:
-    for candidate in INPUT_CANDIDATES:
-        if candidate.is_file():
-            return candidate
-    checked = "\n".join(f"- {path}" for path in INPUT_CANDIDATES)
-    raise FileNotFoundError(f"분석할 CSV를 찾을 수 없습니다. 확인한 경로:\n{checked}")
+    if INPUT_PATH.is_file():
+        return INPUT_PATH
+    raise FileNotFoundError(f"공통 분석 CSV를 찾을 수 없습니다: {INPUT_PATH}")
 
 
 def load_data(path: Path) -> pd.DataFrame:
@@ -127,6 +124,9 @@ def salary_and_experience_summary(
                 "sample_size": int(len(subset)),
                 "mean_salary_usd": salary.mean(),
                 "median_salary_usd": salary.median(),
+                "std_salary_usd": salary.std(),
+                "q1_salary_usd": salary.quantile(0.25),
+                "q3_salary_usd": salary.quantile(0.75),
                 "mean_experience_years": experience.mean(),
                 "median_experience_years": experience.median(),
                 "remote_pct": remote_pct.loc[language, "Remote"],
@@ -242,11 +242,18 @@ def write_report(
     test: dict[str, float | int],
     output_path: Path,
 ) -> None:
-    salary_table = summary.set_index("language")[["sample_size", "mean_salary_usd", "median_salary_usd"]].copy()
-    salary_table.columns = ["N", "Mean salary (USD)", "Median salary (USD)"]
+    salary_table = summary.set_index("language")[[
+        "sample_size",
+        "mean_salary_usd",
+        "median_salary_usd",
+        "std_salary_usd",
+        "q1_salary_usd",
+        "q3_salary_usd",
+    ]].copy()
+    salary_table.columns = ["N", "Mean", "Median", "Std", "Q1", "Q3"]
     salary_table["N"] = salary_table["N"].map(lambda value: f"{int(value):,}")
-    salary_table["Mean salary (USD)"] = salary_table["Mean salary (USD)"].map(lambda value: f"{value:,.0f}")
-    salary_table["Median salary (USD)"] = salary_table["Median salary (USD)"].map(lambda value: f"{value:,.0f}")
+    for column in ["Mean", "Median", "Std", "Q1", "Q3"]:
+        salary_table[column] = salary_table[column].map(lambda value: f"${value:,.0f}")
 
     remote_display = remote_pct.copy()
     remote_display.insert(0, "Valid N", pd.Series(remote_n).map(lambda value: f"{value:,}"))
@@ -264,38 +271,51 @@ def write_report(
     )
     p_text = f"{test['p_value']:.3e}" if test["p_value"] < 0.001 else f"{test['p_value']:.4f}"
 
-    report = f"""# C#, Go, Swift 사용자 분석
+    report = f"""# 플랫폼·백엔드 언어 분석
 
-## 분석 개요
+## 1. 분석 목적
+
+C#, Go, Swift 사용자의 연봉과 조직 규모, 근무 형태, 경력 분포가 어떻게 다른지 분석한다.
+
+## 2. 대상 언어
+
+- C#, Go, Swift
+
+## 3. 데이터 전처리
 
 - 입력: `{input_path.relative_to(PROJECT_ROOT)}`
+- 공통 정제 CSV만 사용하며 언어별 0/1 플래그로 사용자를 선택
 - 연봉 단위: 연간 USD (`{SALARY_COLUMN}`)
 - 언어별 집계: 복수 언어 사용자는 각 언어 그룹에 중복 포함
 - 비율: 해당 문항의 결측·미지 응답을 제외한 유효 응답 기준
 
-## 1. 언어별 연봉 평균·중앙값
+## 4. 기술통계
 
 {markdown_table(salary_table, digits=0)}
 
-## 2. 조직 규모 비교
+### 조직 규모 비교
 
 셀프 고용을 별도 구간으로 두었고, 결측과 `I don’t know`는 비율 모수에서 제외했다.
 
 {markdown_table(org_display)}
 
-## 3. 원격·하이브리드·대면 근무 비율
+### 원격·하이브리드·대면 근무 비율
 
 설문의 두 가지 Hybrid 선택지와 `Your choice` 선택지를 `Hybrid / flexible`로 통합했다.
 
 {markdown_table(remote_display)}
 
-## 4. 경력 분포
+### 경력 분포
 
 전문 경력(`{EXPERIENCE_COLUMN}`)을 6개 구간으로 나눈 비율이다.
 
 {markdown_table(exp_display)}
 
-## 5. C# vs Go 연봉 Welch t-test
+## 5. 시각화 결과
+
+![언어별 연봉과 조직 규모](salary_chart.png)
+
+## 6. 통계 검정
 
 독립 표본 가정을 위해 C#과 Go를 동시에 사용한 응답자는 검정에서 제외했다. 등분산을 가정하지 않는 양측 Welch t-test를 적용했다.
 
@@ -306,15 +326,16 @@ def write_report(
 - t({test['degrees_freedom']:.1f}) = {test['t_statistic']:.3f}, p = {p_text}
 - 결론: {conclusion}
 
-## 6. 차트
+## 7. 결과 해석
 
-![언어별 연봉과 조직 규모](salary_chart.png)
+1. 세 언어의 연봉은 평균뿐 아니라 중앙값·표준편차·사분위 범위를 함께 봐야 한다.
+2. 언어별 원격근무 비율과 조직 규모 구성에 차이가 있어 연봉 결과와 함께 해석해야 한다.
+3. C#과 Go를 동시에 쓰는 응답자를 검정에서 제외해 독립표본 조건을 보완했다.
 
-## 해석 유의사항
+## 8. 분석 한계
 
 - 이 분석은 관찰 데이터의 기술통계이며, 언어 사용이 연봉 차이의 원인임을 의미하지 않는다.
 - 국가, 직무, 경력, 조직 규모 등의 교란 요인을 별도로 통제하지 않았다.
-- 언어별 비율은 복수 언어 사용으로 인해 언어 간 독립적이지 않다.
 """
     output_path.write_text(report, encoding="utf-8")
 

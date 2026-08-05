@@ -1,0 +1,214 @@
+Stack Overflow Salary Analysis - Execution Log
+generated_at: 2026-08-05T13:00:04
+
+========================================================================
+[Domain 1]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain1_dynamic/analysis.py
+started: 2026-08-05T13:00:04
+exit_code: 0
+------------------------------------------------------------------------
+대상 언어: ['Python', 'R'] (제외: ['Julia'], 최소 표본 100명 미만)
+  Python: 원본 표본 수 = 12457
+  R: 원본 표본 수 = 984
+  Julia: 원본 표본 수 = 0
+도메인 표본 수 (Python 또는 R 사용자, 중복 포함): 12591
+
+language  user_count  salary_mean  salary_median   salary_std  salary_q1  salary_q3  experience_mean  experience_median           top_devtype  top_devtype_share
+  Python       12457 92075.492013        76570.0 72043.058662    40605.0   126000.0        13.052316               10.0 Developer, full-stack           0.263707
+       R         984 86429.718496        71328.5 69283.486921    35965.0   120000.0        13.848739               11.0 Developer, full-stack           0.147358
+
+Python vs R salary t-test (Welch): t=0.7428, p=0.458893
+결과 보고서: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain1_dynamic/result.md
+
+========================================================================
+[Domain 2]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain2_jvm/analysis.py
+started: 2026-08-05T13:00:05
+exit_code: 0
+------------------------------------------------------------------------
+[EDA] JVM 사용자 7,065명, 중복 응답 0건
+[로딩 비교] Pandas 0.0285초, Polars 0.0189초
+[t-test] t=-0.316, p=0.751722
+[완료] 기술통계: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/result/summary.csv
+[완료] 2×2 종합 차트: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/result/salary_chart.png
+[완료] Pandas·Polars 비교: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/pandas_polars_comparison.csv
+[완료] 결과 보고서: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/result.md
+
+========================================================================
+[Domain 3]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain3_web/domain3_analysis.py
+started: 2026-08-05T13:00:06
+exit_code: 0
+------------------------------------------------------------------------
+
+================================================================================
+Domain 3: 웹 개발 언어 분석
+================================================================================
+================================================================================
+1. 데이터 로딩
+================================================================================
+
+데이터 로드 완료: 16,093행
+
+================================================================================
+2. 기술통계
+================================================================================
+
+  language  count  mean_salary_usd  median_salary_usd  std_salary  q1_salary  q3_salary
+JavaScript  14606          88058.0            75410.0     67436.0    40000.0   120000.0
+TypeScript  10151          91521.0            79315.0     68420.0    43664.0   125000.0
+       PHP   4010          71217.0            60155.0     58029.0    28424.0    98612.0
+
+경력별 통계:
+JavaScript     : 평균  13.5년, 중앙값  11.0년
+TypeScript     : 평균  12.5년, 중앙값  10.0년
+PHP            : 평균  14.3년, 중앙값  12.0년
+
+================================================================================
+3. 통계 검정
+================================================================================
+
+JavaScript vs TypeScript
+JavaScript: n=5633, mean=$83,888
+TypeScript: n=1178, mean=$97,951
+t-statistic: -6.2760
+p-value: 0.000000
+유의미성: Yes (p<0.05)
+
+================================================================================
+4. 시각화
+================================================================================
+저장: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain3_web/salary_comparison.png
+저장: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain3_web/salary_interactive.html
+저장: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain3_web/summary.csv
+저장: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain3_web/result.md
+
+================================================================================
+분석 완료
+================================================================================
+
+========================================================================
+[Domain 4]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain4_system/analysis.py
+started: 2026-08-05T13:00:07
+exit_code: 0
+------------------------------------------------------------------------
+Language  Users   MeanSalary  MedianSalary    SalaryStd  SalaryQ1  SalaryQ3  MeanExperience  MedianExperience            TopDevType
+       C   3972 87060.965005       72496.5 72173.369027  34804.00  120000.0       13.978751              10.0 Developer, full-stack
+     C++   4480 88744.856027       73516.0 72937.637375  37093.75  120000.0       13.726559              10.0 Developer, full-stack
+    Rust   3031 99774.385021       82000.0 76317.924832  46406.00  136141.0       11.917910              10.0 Developer, full-stack
+[t-test] C++ only vs Rust only: t=-7.3050, p=0.000000
+[완료] 기술통계: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain4_system/summary.csv
+[완료] 차트: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain4_system/salary_boxplot.png
+[완료] 결과 보고서: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain4_system/result.md
+
+========================================================================
+[Domain 5]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain5_platform/analysis.py
+started: 2026-08-05T13:00:08
+exit_code: 0
+------------------------------------------------------------------------
+분석 완료: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain5_platform
+
+========================================================================
+[Domain 6]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python -m domain6_ml.model
+started: 2026-08-05T13:00:09
+exit_code: 0
+------------------------------------------------------------------------
+[정보] 입력 파일: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv
+[정보] 사용 컬럼: ['ResponseId', 'LanguageHaveWorkedWith', 'ConvertedCompYearly', 'YearsCodePro', 'RemoteWork', 'DevType', 'EdLevel', 'Employment', 'OrgSize', 'Country', 'SurveyYear', 'lang_Python', 'lang_R', 'lang_Julia', 'lang_Java', 'lang_Kotlin', 'lang_Scala', 'lang_JavaScript', 'lang_TypeScript', 'lang_PHP', 'lang_C', 'lang_C++', 'lang_Rust', 'lang_C#', 'lang_Go', 'lang_Swift']
+[검증 성공] 저장 후 다시 불러온 Pipeline의 예측 결과가 동일합니다.
+============================================================
+Domain 6 고연봉 예측 완료
+============================================================
+입력 파일: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv
+입력 파일 크기: 5749764
+전체 로딩 행 수: 21678
+연봉 결측 제외: 0
+연봉 0 이하 제외: 0
+언어 결측 제외: 0
+중복 제외: 0
+최종 모델 행 수: 21678
+학습 행 수: 17342
+테스트 행 수: 4336
+고연봉 기준 분위수: 0.5
+고연봉 임계 연봉: 76340.50
+학습 고연봉 비율: 0.500
+테스트 고연봉 비율: 0.492
+수치형 특성 수: 2
+범주형 특성 수: 6
+언어 특성 수: 15
+Country 포함 여부: True
+
+DummyClassifier
+- accuracy: 0.508
+- balanced_accuracy: 0.500
+- precision: 0.000
+- recall: 0.000
+- f1: 0.000
+- roc_auc: 0.500
+- average_precision: 0.492
+
+Language-only LogisticRegression
+- accuracy: 0.563
+- balanced_accuracy: 0.564
+- precision: 0.550
+- recall: 0.624
+- f1: 0.584
+- roc_auc: 0.595
+- average_precision: 0.566
+
+Profile-only LogisticRegression
+- accuracy: 0.804
+- balanced_accuracy: 0.804
+- precision: 0.796
+- recall: 0.808
+- f1: 0.802
+- roc_auc: 0.885
+- average_precision: 0.874
+
+Full LogisticRegression
+- accuracy: 0.810
+- balanced_accuracy: 0.811
+- precision: 0.800
+- recall: 0.821
+- f1: 0.810
+- roc_auc: 0.890
+- average_precision: 0.878
+
+Profile-only 대비 Full F1 변화: 0.008
+Profile-only 대비 Full ROC-AUC 변화: 0.005
+Profile-only 대비 Full Average Precision 변화: 0.004
+
+모델 저장: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain6_ml/high_salary_model.joblib
+모델 재로드 검증: True
+결과 JSON: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain6_ml/result.json
+결과 Markdown: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain6_ml/result.md
+============================================================
+언어별 연봉 HTML 보고서 생성 완료
+============================================================
+보고서 경로: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain6_ml/language_salary_report.html
+분석 언어 수: 15
+분석 응답자 수: 21678
+생성된 메인 차트 수: 11
+부록 차트 수: 4
+보고서 파일 크기: 5128.4 KB
+핵심 분석 주제: 프로그래밍 언어 사용자 집단별 연봉 수준 및 분포 비교
+
+========================================================================
+[통합 report.md]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python scripts/generate_report.py
+started: 2026-08-05T13:00:11
+exit_code: 0
+------------------------------------------------------------------------
+[완료] 통합 보고서: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/report.md
+
+========================================================================
+[자동 테스트]
+command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python -m pytest -q
+started: 2026-08-05T13:00:11
+exit_code: 0
+------------------------------------------------------------------------
+..................                                                       [100%]
+18 passed in 1.05s
