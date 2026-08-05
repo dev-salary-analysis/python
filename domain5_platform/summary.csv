@@ -1,0 +1,4 @@
+﻿language,sample_size,mean_salary_usd,median_salary_usd,mean_experience_years,median_experience_years,remote_pct,hybrid_flexible_pct,in_person_pct,most_common_org_size
+C#,6309,89260.05,78633.0,14.81,12.0,30.89,53.71,15.4,100–499
+Go,3679,104710.26,88494.0,13.02,11.0,38.59,50.08,11.34,100–499
+Swift,1156,102126.54,90723.0,14.5,12.0,38.5,49.44,12.06,20–99
