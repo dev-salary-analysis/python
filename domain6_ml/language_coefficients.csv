@@ -1,0 +1,16 @@
+language,feature,coefficient,abs_coefficient,direction
+PHP,lang__lang_php,-0.6442634481560036,0.6442634481560036,negative
+Scala,lang__lang_scala,0.5636905051264818,0.5636905051264818,positive
+Go,lang__lang_go,0.539549263238861,0.539549263238861,positive
+TypeScript,lang__lang_typescript,0.4362876126158498,0.4362876126158498,positive
+C#,lang__lang_csharp,-0.32328510214600864,0.32328510214600864,negative
+Rust,lang__lang_rust,0.32039570620751606,0.32039570620751606,positive
+Swift,lang__lang_swift,0.30635157990067063,0.30635157990067063,positive
+R,lang__lang_r,-0.21169999403226356,0.21169999403226356,negative
+Kotlin,lang__lang_kotlin,0.20741504119557172,0.20741504119557172,positive
+Python,lang__lang_python,0.1944181251544179,0.1944181251544179,positive
+C,lang__lang_c,-0.10313424994564804,0.10313424994564804,negative
+Java,lang__lang_java,-0.04412983626230843,0.04412983626230843,negative
+C++,lang__lang_cpp,0.04163152877303362,0.04163152877303362,positive
+JavaScript,lang__lang_javascript,-0.036130756369846743,0.036130756369846743,negative
+Julia,lang__lang_julia,0.0,0.0,neutral

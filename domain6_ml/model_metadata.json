@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-08-05T01:00:09.496937+00:00",
+  "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "pandas_version": "3.0.5",
+  "numpy_version": "2.5.1",
+  "scikit_learn_version": "1.9.0",
+  "joblib_version": "1.5.3",
+  "input_data_path": "/Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml/domain6_ml/results.csv",
+  "input_file_size": 5749764,
+  "total_loaded_rows": 21678,
+  "valid_model_rows": 21678,
+  "salary_missing_excluded": 0,
+  "salary_nonpositive_excluded": 0,
+  "language_missing_excluded": 0,
+  "duplicate_excluded": 0,
+  "train_rows": 17342,
+  "test_rows": 4336,
+  "random_state": 42,
+  "test_size": 0.2,
+  "high_salary_quantile": 0.75,
+  "high_salary_threshold": 120646.75,
+  "target_name": "HighSalaryTop25",
+  "target_definition": "학습 데이터의 ConvertedCompYearly 75% 분위수 이상",
+  "numeric_features": [
+    "YearsCodeProNumeric",
+    "LanguageCount"
+  ],
+  "categorical_features": [
+    "RemoteWork",
+    "DevType",
+    "EdLevel",
+    "Employment",
+    "OrgSize",
+    "Country"
+  ],
+  "language_features": [
+    "lang_python",
+    "lang_r",
+    "lang_julia",
+    "lang_java",
+    "lang_kotlin",
+    "lang_scala",
+    "lang_javascript",
+    "lang_typescript",
+    "lang_php",
+    "lang_c",
+    "lang_cpp",
+    "lang_rust",
+    "lang_csharp",
+    "lang_go",
+    "lang_swift"
+  ],
+  "country_included": true,
+  "leakage_columns": [
+    "ResponseId",
+    "ConvertedCompYearly",
+    "LogSalary",
+    "LanguageHaveWorkedWith",
+    "HighSalaryTop25"
+  ],
+  "model_comparison": [
+    "dummy",
+    "language_only",
+    "profile_only",
+    "full_model"
+  ],
+  "final_model": "full_model",
+  "model_hyperparameters": {
+    "max_iter": 3000,
+    "solver": "liblinear",
+    "class_weight": "balanced",
+    "random_state": 42
+  },
+  "save_model": true,
+  "model_path": "/Users/baekjiheon/Desktop/SKALA/Day15_Python_2/domain_6ml/domain6_ml/model.joblib",
+  "model_reload_verified": true
+}
