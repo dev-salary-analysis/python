@@ -114,19 +114,24 @@ plt.savefig("domain4_system/salary_boxplot.png")
 
 # summary.csv 저장
 summary = pd.DataFrame({
-    "Language":["C","C++","Rust"],
-    "Users":[len(c),len(cpp),len(rust)],
-    "MedianSalary":[
+    "Language": ["C", "C++", "Rust"],
+    "Users": [len(c), len(cpp), len(rust)],
+    "MeanSalary": [
+        c["ConvertedCompYearly"].mean(),
+        cpp["ConvertedCompYearly"].mean(),
+        rust["ConvertedCompYearly"].mean()
+    ],
+    "MedianSalary": [
         c["ConvertedCompYearly"].median(),
         cpp["ConvertedCompYearly"].median(),
         rust["ConvertedCompYearly"].median()
     ],
-    "MeanExperience":[
+    "MeanExperience": [
         c["YearsCodePro"].mean(),
         cpp["YearsCodePro"].mean(),
         rust["YearsCodePro"].mean()
     ],
-    "MedianExperience":[
+    "MedianExperience": [
         c["YearsCodePro"].median(),
         cpp["YearsCodePro"].median(),
         rust["YearsCodePro"].median()
@@ -135,3 +140,7 @@ summary = pd.DataFrame({
 
 summary.to_csv("domain4_system/summary.csv", index=False)
 
+
+# test
+
+ 
