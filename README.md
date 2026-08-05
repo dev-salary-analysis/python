@@ -123,7 +123,7 @@ python -m pytest -q
 `report.md`는 분석 실행 결과를 반영해 자동 생성됩니다. 저장소 상위의
 `integrated_report.html`은 제출용 정적 원본으로 별도 관리하며,
 `scripts/run_all.py`가 생성하거나 덮어쓰지 않습니다. 과제 안내서의 PDF 제출
-요구에 맞춘 최종본은 `output/pdf/integrated_report.pdf`입니다.
+요구에 맞춘 최종본은 최상위 폴더의 `판교_3반_1조_최종레포트.pdf`입니다.
 
 제출 전에는 `python scripts/run_all.py`를 실행하고
 `output/evidence/execution_log.txt`에서 Domain 1~6, 보고서 생성, 자동 테스트의
