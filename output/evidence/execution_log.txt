@@ -1,10 +1,10 @@
 Stack Overflow Salary Analysis - Execution Log
-generated_at: 2026-08-05T13:00:04
+generated_at: 2026-08-05T14:16:25
 
 ========================================================================
 [Domain 1]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain1_dynamic/analysis.py
-started: 2026-08-05T13:00:04
+started: 2026-08-05T14:16:25
 exit_code: 0
 ------------------------------------------------------------------------
 대상 언어: ['Python', 'R'] (제외: ['Julia'], 최소 표본 100명 미만)
@@ -23,11 +23,11 @@ Python vs R salary t-test (Welch): t=0.7428, p=0.458893
 ========================================================================
 [Domain 2]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain2_jvm/analysis.py
-started: 2026-08-05T13:00:05
+started: 2026-08-05T14:16:26
 exit_code: 0
 ------------------------------------------------------------------------
 [EDA] JVM 사용자 7,065명, 중복 응답 0건
-[로딩 비교] Pandas 0.0285초, Polars 0.0189초
+[로딩 비교] Pandas 0.0446초, Polars 0.0315초
 [t-test] t=-0.316, p=0.751722
 [완료] 기술통계: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/result/summary.csv
 [완료] 2×2 종합 차트: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain2_jvm/result/salary_chart.png
@@ -37,7 +37,7 @@ exit_code: 0
 ========================================================================
 [Domain 3]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain3_web/domain3_analysis.py
-started: 2026-08-05T13:00:06
+started: 2026-08-05T14:16:28
 exit_code: 0
 ------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ p-value: 0.000000
 ========================================================================
 [Domain 4]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain4_system/analysis.py
-started: 2026-08-05T13:00:07
+started: 2026-08-05T14:16:29
 exit_code: 0
 ------------------------------------------------------------------------
 Language  Users   MeanSalary  MedianSalary    SalaryStd  SalaryQ1  SalaryQ3  MeanExperience  MedianExperience            TopDevType
@@ -105,7 +105,7 @@ Language  Users   MeanSalary  MedianSalary    SalaryStd  SalaryQ1  SalaryQ3  Mea
 ========================================================================
 [Domain 5]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python domain5_platform/analysis.py
-started: 2026-08-05T13:00:08
+started: 2026-08-05T14:16:30
 exit_code: 0
 ------------------------------------------------------------------------
 분석 완료: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/domain5_platform
@@ -113,7 +113,7 @@ exit_code: 0
 ========================================================================
 [Domain 6]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python -m domain6_ml.model
-started: 2026-08-05T13:00:09
+started: 2026-08-05T14:16:30
 exit_code: 0
 ------------------------------------------------------------------------
 [정보] 입력 파일: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/data/results.csv
@@ -199,7 +199,7 @@ Profile-only 대비 Full Average Precision 변화: 0.004
 ========================================================================
 [통합 report.md]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python scripts/generate_report.py
-started: 2026-08-05T13:00:11
+started: 2026-08-05T14:16:32
 exit_code: 0
 ------------------------------------------------------------------------
 [완료] 통합 보고서: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/report.md
@@ -207,8 +207,8 @@ exit_code: 0
 ========================================================================
 [자동 테스트]
 command: /Users/yoonman/01_Project/skala_practice/08/08_04/종합실습/code/.venv/bin/python -m pytest -q
-started: 2026-08-05T13:00:11
+started: 2026-08-05T14:16:32
 exit_code: 0
 ------------------------------------------------------------------------
 ..................                                                       [100%]
-18 passed in 1.05s
+18 passed in 1.06s
